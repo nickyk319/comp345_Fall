@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>       // std::vector
+#include <vector>
 #include <random>
 #include <iterator>
 #include <time.h>
