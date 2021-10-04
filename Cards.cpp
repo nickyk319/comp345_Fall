@@ -1,10 +1,10 @@
 //
-// Created by nicky on 2021-10-03.
+// Created by Yaqi Kang on 2021-10-03.
 //
 
 #include <iostream>
 #include <string>
-#include <vector>       // std::vector
+#include <vector>       
 #include <random>
 #include <iterator>
 #include <time.h>
