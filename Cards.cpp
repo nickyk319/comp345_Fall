@@ -1,5 +1,5 @@
 //
-// Created by nicky on 2021-10-03.
+// Created by Yaqi Kang on 2021-10-03.
 //
 
 #include <iostream>
@@ -9,6 +9,8 @@
 #include <iterator>
 #include <time.h>
 #include "Cards.h"
+#include "Orders.cpp"
+#include "OrdersList.cpp"
 
 using namespace std;
 
@@ -59,6 +61,30 @@ string Card::cardTypeToString(CardType cardTypeToString) {
             return "diplomacy";
     }
     return "";
+}
+
+void Card::play(vector<Order*> &olist, vector<Card*> &cards, vector<Card*> &handCards) {
+    Card* card;
+    //add card corresponding order to order list
+    if(cardTypeToString(getType()) == "bomb"){
+        olist.push_back(new Bomb(2));
+    }else if(cardTypeToString(getType()) == "reinforcement"){
+        olist.push_back(new Deploy(2,2,3));
+    }else if(cardTypeToString(getType()) == "blockade"){
+        olist.push_back(new Blockade(2));
+    }else if(cardTypeToString(getType()) == "airlift"){
+        olist.push_back(new Airlift(2,2,3,4));
+    }else if(cardTypeToString(getType()) == "diplomacy"){
+        olist.push_back(new Negotiate(2, 3));
+    }
+    //remove this card from hand
+    auto it = std::find(handCards.begin(), handCards.end(), card);
+
+    if(it != handCards.end()){
+        handCards.erase(it);
+    }
+    //return it back to deck
+    cards.emplace_back(new Card(*card));
 }
 
 Deck::Deck() {

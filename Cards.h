@@ -6,6 +6,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Orders.cpp"
+#include "OrdersList.cpp"
+
 
 using namespace std;
 
@@ -25,10 +28,12 @@ public:
     Card& operator=(const Card& card);
     CardType getType() const;
     static string cardTypeToString(CardType cardTypeToString);
+    void play(vector<Order*> &olist,vector<Card*> &cards,vector<Card*> &handCards);
 
 private:
     CardType cardType;
 };
+
 
 class Deck{
 public:
