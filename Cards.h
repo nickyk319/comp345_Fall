@@ -6,8 +6,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Orders.cpp"
-#include "OrdersList.cpp"
+#include "Order.h"
+#include "OrdersList.h"
 
 
 using namespace std;
@@ -24,11 +24,12 @@ public:
     Card(CardType cardType);
     Card(const Card&);
     ~Card();
+
     friend ostream& operator<<(ostream& output, const Card& card);
     Card& operator=(const Card& card);
     CardType getType() const;
     static string cardTypeToString(CardType cardTypeToString);
-    void play(vector<Order*> &olist,vector<Card*> &cards,vector<Card*> &handCards);
+    void play(vector<Order*> &olist, vector<Card *> &cards, vector<Card *> &handCards);
 
 private:
     CardType cardType;
@@ -49,7 +50,6 @@ public:
     friend ostream& operator<<(ostream& output, const Deck& deck);
     //get method
     vector<Card*> getCards();
-
     friend ostream& operator<<(ostream& output, const Deck& deck);
     //draw method
     Card* draw();

@@ -1,158 +1,139 @@
-#pragma once
-#include <string>
-#include <iostream>
-
-class Order
-{
-private:
-    std::string info = "this is an order";
-public:
-    Order() {}
-
-    ~Order() {}
-    virtual bool validate() {
-        return true;
-    }
-
-    virtual void execute() {
-    }
-};
-
-class Deploy : public Order {
-private:
-    std::string info = "place some armies on one of the current players territories.";
-public:
-    int playid;
-    int territoryid;
-    int num;
-    Deploy(int playID, int territoryID, int num) {
-        this->playid = playID;
-        this->territoryid = territoryID;
-        this->num = num;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // need map.set_armies(current_player, territories, number)
-        std::cout << info << std::endl;
-        std::cout << " -> PlayID " << playid << " put " << num << " armies " << " on " << territoryid << " territory" << std::endl;
-    }
-};
-
-class Advance : public Order {
-private:
-    std::string info = "move some armies from one of the current players territories (source) to an adjacent territory (target).If the target territory belongs to the current player, the armies are moved to the target territory. If the target territory belongs to another player, an attack happens between the two territories.";
-public:
-    int playid;
-    int territoryid;
-    int new_territoryid;
-    Advance(int playID, int territoryID, int new_territoryID) {
-        this->playid = playID;
-        this->territoryid = territoryID;
-        this->new_territoryid = new_territoryID;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // map.clear_armies(current_player, source_territories)
-        // map.add_armies(current_player, target_territories)
-        std::cout << info << std::endl;
-        std::cout << " -> PlayID " << playid << " move all armies " << " from " << territoryid << " territory to " << new_territoryid << " territory" << std::endl;
-    }
-
-};
-
-class Bomb : public Order {
-private:
-    std::string info = "destroy half of the armies located on an opponents territory that is adjacent to one of the current players territories.";
-public:
-    int territoryid;
-    Bomb(int territoryID) {
-        this->territoryid = territoryID;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // map.update_armies(target_player, territories, 0.5)
-        std::cout << info << std::endl;
-        std::cout << "the armies on " << territoryid << " territory is reduced.";
-    }
-
-};
-
-class Blockade : public Order {
-private:
-    std::string info = "triple the number of armies on one of the current players territories and make it a neutral territory.";
-public:
-    int territoryid;
-    Blockade(int territoryID) {
-        this->territoryid = territoryID;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // map.update_armies(target_player, territories, 3)
-        // map.set_flag(-1); // neutral territory
-        std::cout << info << std::endl;
-        std::cout << "the armies on " << territoryid << " territory is triple, but this territory is marked as a neutral territory";
-    }
-
-};
-
-class Airlift : public Order {
-private:
-    std::string info = "advance some armies from one of the current players territories to any another territory.";
-public:
-    int playid;
-    int territoryid;
-    int new_territoryid;
-    int num;
-    Airlift(int playID, int territoryID, int new_territoryID, int num) {
-        this->playid = playID;
-        this->territoryid = territoryID;
-        this->new_territoryid = new_territoryID;
-        this->num = num;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // map.add_armies(current_player, target_territories)
-        std::cout << info << std::endl;
-        std::cout << " -> PlayID " << playid << " move "<< num <<" armies " << " from " << territoryid << " territory to " << new_territoryid << " territory" << std::endl;
-
-    }
-
-};
-
-class Negotiate : public Order {
-private:
-    std::string info = "prevent attacks between the current player and another player until the end of the turn.";
-public:
-    int play1id;
-    int play2id;
-    Negotiate(int play1ID, int play2ID) {
-        this->play1id = play1ID;
-        this->play2id = play2ID;
-    }
-    bool validate() {
-        return true;
-    }
-
-    void execute() {
-        // map.add_negotiate(current_player, target_player)
-        std::cout << info << std::endl;
-        std::cout << "Negotiate built between Player "<< play1id << " and Player " << play2id << std::endl;
-    }
-};
+#include "Order.h"
 
 
+Order::Order() {}
+
+Order::Order(const Order& o1) {
+
+}
+
+Order::~Order() {}
+
+bool Order::validate() {
+    return true;
+}
+
+void Order::execute() {
+}
+
+
+
+Deploy::Deploy(int playID, int territoryID, int num) {
+    this->playid = playID;
+    this->territoryid = territoryID;
+    this->num = num;
+}
+Deploy::Deploy(const Deploy& o1) {
+    this->playid = o1.playid;
+    this->territoryid = o1.territoryid;
+    this->num = o1.num;
+}
+bool Deploy::validate() {
+    return true;
+}
+
+void Deploy::execute() {
+    // need map.set_armies(current_player, territories, number)
+    std::cout << info << std::endl;
+    std::cout << " -> PlayID " << playid << " put " << num << " armies " << " on " << territoryid << " territory" << std::endl;
+}
+
+
+Advance::Advance(int playID, int territoryID, int new_territoryID) {
+    this->playid = playID;
+    this->territoryid = territoryID;
+    this->new_territoryid = new_territoryID;
+}
+Advance::Advance(const Advance& o1) {
+    this->playid = o1.playid;
+    this->territoryid = o1.territoryid;
+    this->new_territoryid = o1.new_territoryid;
+}
+bool Advance::validate() {
+    return true;
+}
+
+void Advance::execute() {
+    // map.clear_armies(current_player, source_territories)
+    // map.add_armies(current_player, target_territories)
+    std::cout << info << std::endl;
+    std::cout << " -> PlayID " << playid << " move all armies " << " from " << territoryid << " territory to " << new_territoryid << " territory" << std::endl;
+}
+
+
+Bomb::Bomb(int territoryID) {
+    this->territoryid = territoryID;
+}
+Bomb::Bomb(const Bomb& o1) {
+    this->territoryid = o1.territoryid;
+}
+bool Bomb::validate() {
+    return true;
+}
+
+void Bomb::execute() {
+    // map.update_armies(target_player, territories, 0.5)
+    std::cout << info << std::endl;
+    std::cout << "the armies on " << territoryid << " territory is reduced.";
+}
+
+
+Blockade::Blockade(int territoryID) {
+    this->territoryid = territoryID;
+}
+Blockade::Blockade(const Blockade& o1) {
+    this->territoryid = o1.territoryid;
+}
+bool Blockade::validate() {
+    return true;
+}
+
+void Blockade::execute() {
+    // map.update_armies(target_player, territories, 3)
+    // map.set_flag(-1); // neutral territory
+    std::cout << info << std::endl;
+    std::cout << "the armies on " << territoryid << " territory is triple, but this territory is marked as a neutral territory";
+}
+
+
+Airlift::Airlift(int playID, int territoryID, int new_territoryID, int num) {
+    this->playid = playID;
+    this->territoryid = territoryID;
+    this->new_territoryid = new_territoryID;
+    this->num = num;
+}
+Airlift::Airlift(const Airlift& o1) {
+    this->playid = o1.playid;
+    this->territoryid = o1.territoryid;
+    this->new_territoryid = o1.new_territoryid;
+    this->num = o1.num;
+}
+bool Airlift::validate() {
+    return true;
+}
+
+void Airlift::execute() {
+    // map.add_armies(current_player, target_territories)
+    std::cout << info << std::endl;
+    std::cout << " -> PlayID " << playid << " move " << num << " armies " << " from " << territoryid << " territory to " << new_territoryid << " territory" << std::endl;
+
+}
+
+
+Negotiate::Negotiate(int play1ID, int play2ID) {
+    this->play1id = play1ID;
+    this->play2id = play2ID;
+}
+Negotiate::Negotiate(const Negotiate& o1) {
+    this->play1id = o1.play1id;
+    this->play2id = o1.play2id;
+}
+bool Negotiate::validate() {
+    return true;
+}
+
+void Negotiate::execute() {
+    // map.add_negotiate(current_player, target_player)
+    std::cout << info << std::endl;
+    std::cout << "Negotiate built between Player " << play1id << " and Player " << play2id << std::endl;
+}

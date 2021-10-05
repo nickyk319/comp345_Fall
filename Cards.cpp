@@ -7,7 +7,7 @@
 #include <vector>
 #include <random>
 #include <iterator>
-#include <time.h>
+#include <ctime>
 #include "Cards.h"
 #include "Orders.cpp"
 #include "OrdersList.cpp"
@@ -63,19 +63,19 @@ string Card::cardTypeToString(CardType cardTypeToString) {
     return "";
 }
 
-void Card::play(vector<Order*> &olist, vector<Card*> &cards, vector<Card*> &handCards) {
+void Card::play(vector<Order *> &olist, vector<Card *> &cards, vector<Card *> &handCards) {
     Card* card;
     //add card corresponding order to order list
     if(cardTypeToString(getType()) == "bomb"){
-        olist.push_back(new Bomb(2));
+        olist.add(new Bomb(2));
     }else if(cardTypeToString(getType()) == "reinforcement"){
-        olist.push_back(new Deploy(2,2,3));
+        olist.add(new Deploy(2,2,3));
     }else if(cardTypeToString(getType()) == "blockade"){
-        olist.push_back(new Blockade(2));
+        olist.add(new Blockade(2));
     }else if(cardTypeToString(getType()) == "airlift"){
-        olist.push_back(new Airlift(2,2,3,4));
+        olist.add(new Airlift(2,2,3,4));
     }else if(cardTypeToString(getType()) == "diplomacy"){
-        olist.push_back(new Negotiate(2, 3));
+        olist.add(new Negotiate(2, 3));
     }
     //remove this card from hand
     auto it = std::find(handCards.begin(), handCards.end(), card);
