@@ -18,18 +18,18 @@ enum CardType{
 
 const int CardTYPE_ITEMS = 5;
 
+
+
 class Card{
 public:
     Card();
     Card(CardType cardType);
     Card(const Card&);
     ~Card();
-
     friend ostream& operator<<(ostream& output, const Card& card);
     Card& operator=(const Card& card);
     CardType getType() const;
     static string cardTypeToString(CardType cardTypeToString);
-    void play(vector<Order*> &olist, vector<Card *> &cards, vector<Card *> &handCards);
 
 private:
     CardType cardType;
@@ -61,7 +61,7 @@ private:
     void initializeDeck();
 };
 
-class Hand {
+class Hand: public Card{
 public:
     Hand();
     Hand(Deck *deck);
@@ -69,7 +69,10 @@ public:
     Hand(const Hand& obj);
     Hand& operator= (const Hand& obj);
     friend ostream& operator<<(ostream& output, const Hand& hand);
+    void setHandCards(Card *card);
     vector<Card*> getHandCards();
+    void remove_played_handCards(Card* r_card);
+    void play(OrdersList* olist, Card* card, Deck* deck);
 private:
     vector<Card*> handCards;
 };
