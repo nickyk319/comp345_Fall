@@ -182,3 +182,4 @@ void Territory::printTerritory(vector<int> v)
         cout<<"empty";
     }
 }
+
