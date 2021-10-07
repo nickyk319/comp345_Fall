@@ -16,14 +16,14 @@ enum CardType{
     bomb, reinforcement, blockade, airlift, diplomacy
 };
 
-const int CardTYPE_ITEMS = 5;
+const int CARD_TYPE_ITEMS = 5;
 
 
 
 class Card{
 public:
     Card();
-    Card(CardType cardType);
+    explicit Card(CardType cardType);
     Card(const Card&);
     ~Card();
     friend ostream& operator<<(ostream& output, const Card& card);
@@ -64,7 +64,6 @@ private:
 class Hand: public Card{
 public:
     Hand();
-    Hand(Deck *deck);
     ~Hand();
     Hand(const Hand& obj);
     Hand& operator= (const Hand& obj);

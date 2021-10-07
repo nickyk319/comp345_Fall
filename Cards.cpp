@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
 #include <random>
 #include <iterator>
 #include <ctime>
@@ -62,38 +63,14 @@ string Card::cardTypeToString(CardType cardTypeToString) {
     return "";
 }
 
-//void Card::play(vector<Order *> &olist, vector<Card *> &cards, vector<Card *> &handCards) {
-//    Card* card;
-    //add card corresponding order to order list
-//    if(cardTypeToString(getType()) == "bomb"){
-//        olist.add(new Bomb(2));
-//    }else if(cardTypeToString(getType()) == "reinforcement"){
-//        olist.add(new Deploy(2,2,3));
-//    }else if(cardTypeToString(getType()) == "blockade"){
-//        olist.add(new Blockade(2));
-//    }else if(cardTypeToString(getType()) == "airlift"){
-//        olist.add(new Airlift(2,2,3,4));
-//    }else if(cardTypeToString(getType()) == "diplomacy"){
-//        olist.add(new Negotiate(2, 3));
-//    }
-
-    //remove this card from hand
-//    auto it = std::find(handCards.begin(), handCards.end(), card);
-//
-//    if(it != handCards.end()){
-//        handCards.erase(it);
-//    }
-//    //return it back to deck
-//    cards.emplace_back(new Card(*card));
-//}
-
 Deck::Deck() {
     initializeDeck();
     shuffleDeck();
 }
 
+//initialize 50 cards to deck
 void Deck::initializeDeck() {
-    for(int i = 0; i < max_deck_size/CardTYPE_ITEMS; i++){
+    for(int i = 0; i < max_deck_size/CARD_TYPE_ITEMS; i++){
             cards.emplace_back(new Card(bomb));
             cards.emplace_back(new Card(reinforcement));
             cards.emplace_back(new Card(blockade));
@@ -142,8 +119,9 @@ vector<Card*> Deck::getCards() {
 
 Card* Deck::draw() {
     //generate a random index of size
-    srand((unsigned int)time(NULL));
-    int random = rand() % cards.size();
+    srand(time(nullptr));
+    int card_size = cards.size();
+    int random = rand() % card_size;
     Card* card;
     //take out the random selected element
     if (!cards.empty()) {
@@ -161,13 +139,9 @@ void Deck::shuffleDeck() {
     std::shuffle(cards.begin(), cards.end(), g);
 }
 
-Hand::Hand() {
-        //handCards.emplace_back(new Card());
-}
+Hand::Hand() {}
 
-//Hand::Hand(Deck *deck) {
-//        handCards.emplace_back(deck->draw());
-//}
+
 
 Hand::~Hand() {
     for (auto & card : handCards) {
@@ -197,13 +171,17 @@ std::ostream &operator<<(ostream &output, const Hand &hand) {
         output << card->cardTypeToString(card->getType());
         output << '\n';
     }
+    if(hand.handCards.empty()){
+        cout << "No more cards in hand." << endl;
+    }
+
     output << "\n" << endl;
     return output;
 }
 
 void Hand::setHandCards(Card * card)
 {
-    //add the card into the handcards,we can recall the deck->draw() to get a card
+    //add the card to the hand
     handCards.push_back(card);
 
 }
@@ -214,18 +192,16 @@ vector<Card*> Hand::getHandCards() {
 
 void Hand::remove_played_handCards(Card* card)
 {
-    //traverse the hand cards, find a same type card, then delete it.
-    //we don't need to find the specific card because it is hard, just delete one same type card from handcards
+    //remove a card from hand if played
     for (int p = 0; p < handCards.size(); p++) {
         if (handCards.at(p)->getType() == card->getType()) {
-            //find a same type card, then delete, and return.
-            //vec_hand_cards.erase(vec_hand_cards.begin() + p);
             handCards.erase(handCards.begin() + p);
             cout << "...deleting the card " << card->cardTypeToString(card->getType()) << " from the Hand\n"<<  endl;
             return;
         }
     }
 }
+
 void Hand::play(OrdersList* olist, Card *card, Deck* deck){
 
     //add card corresponding order to order list
@@ -249,12 +225,6 @@ void Hand::play(OrdersList* olist, Card *card, Deck* deck){
     //return this card back to deck
     deck->getCards().emplace_back(card);
 
-    //remove this card from hand
-//    auto it = find(handCards.begin(), handCards.end(), card);
-//    if(it != handCards.end()){
-//        handCards.erase(it);
-//    }
+    //remove card from hand
     remove_played_handCards(card);
-
-
 }
