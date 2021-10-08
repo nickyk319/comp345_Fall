@@ -1,5 +1,5 @@
 #include<iostream>
-#include"Player.cpp"
+#include"Player.h"
 int main() {
 	player x;
 	x.territories[0]=2;
