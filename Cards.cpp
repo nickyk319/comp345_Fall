@@ -11,7 +11,7 @@
 #include <ctime>
 #include "Cards.h"
 #include "Order.h"
-#include "OrdersList.h"
+
 
 using namespace std;
 
@@ -139,8 +139,12 @@ void Deck::shuffleDeck() {
     std::shuffle(cards.begin(), cards.end(), g);
 }
 
-Hand::Hand() {}
+void Deck::add_card_to_deck(Card * card)
+{
+    cards.push_back(card);
+}
 
+Hand::Hand() {}
 
 
 Hand::~Hand() {
@@ -153,13 +157,16 @@ Hand::~Hand() {
 Hand::Hand(const Hand &hand) {
     for (auto & card : hand.handCards) {
         handCards.emplace_back(new Card(*card));
+        handCards_to_play.emplace_back(new Card(*card));
     }
 }
 
 Hand &Hand::operator=(const Hand &hand) {
     handCards.clear();
+    handCards_to_play.clear();
     for (auto & card : hand.handCards) {
         handCards.emplace_back(new Card(*card));
+        handCards_to_play.emplace_back(new Card(*card));
     }
     return *this;
 }
@@ -202,7 +209,19 @@ void Hand::remove_played_handCards(Card* card)
     }
 }
 
+//return the played card to deck
+void Hand::return_card_to_deck(Deck* deck)
+{
+    for (int n = 0; n < handCards_to_play.size(); n++) {
+        //add the played card of vec_play_cards to Deck cards
+        deck->add_card_to_deck(handCards_to_play.at(n));
+    }
+
+}
+
 void Hand::play(OrdersList* olist, Card *card, Deck* deck){
+
+    handCards_to_play.push_back(card);
 
     //add card corresponding order to order list
     if(card->cardTypeToString(card->getType()) == "bomb"){
@@ -222,9 +241,12 @@ void Hand::play(OrdersList* olist, Card *card, Deck* deck){
         cout << "diplomacy add to the order list" << endl;
     }
 
-    //return this card back to deck
-    deck->getCards().emplace_back(card);
-
     //remove card from hand
     remove_played_handCards(card);
+    //return this card back to deck
+    return_card_to_deck(deck);
+
+    handCards_to_play.pop_back();
+
+
 }
