@@ -6,15 +6,15 @@ using namespace std;
 
 
 
-	void Order::setcountry(int country) {
-		m_country = country;
-	}
-	void Order::setorder(string order) {
-		m_order = order;
-	}
-	void Order::settarget(int target) {
-		m_target = target;
-	}
+void Order::setcountry(int country) {
+	m_country = country;
+}
+void Order::setorder(string order) {
+	m_order = order;
+}
+void Order::settarget(int target) {
+	m_target = target;
+}
 	
 void player::printList(const list<int>& L) {
 			for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
