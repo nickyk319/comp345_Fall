@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 #include "Order.h"
-#include "OrdersList.h"
+
 
 
 using namespace std;
@@ -54,7 +54,7 @@ public:
     //draw method
     Card* draw();
     void shuffleDeck();
-
+    void add_card_to_deck(Card * card);
 private:
     vector<Card*> cards;
     int max_deck_size = 50;
@@ -71,7 +71,9 @@ public:
     void setHandCards(Card *card);
     vector<Card*> getHandCards();
     void remove_played_handCards(Card* r_card);
+    void return_card_to_deck(Deck* deck);
     void play(OrdersList* olist, Card* card, Deck* deck);
 private:
     vector<Card*> handCards;
+    vector<Card*> handCards_to_play;
 };
