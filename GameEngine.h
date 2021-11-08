@@ -31,6 +31,7 @@ public:
 	GameEngine();
     int convert_name_to_id();
     void initializePlayers();
+    void shufflePlayerList();
     void startUpPhase();
     void gameStart();
 

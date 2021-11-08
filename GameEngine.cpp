@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <iomanip>
+#include <random>
 
 using namespace std;
 
@@ -69,6 +70,13 @@ void GameEngine::addPlayer() {
 	setState(GameState::players_added);
 }
 
+//determine randomly the order of play of the players in the game
+void GameEngine::shufflePlayerList() {
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(player_list.begin(), player_list.end(), g);
+}
+
 void GameEngine::gameStart(){
     //assign territory to players in round-robin fashion
     cout << "\n The territories are assigned in the following order: " << endl;
@@ -84,6 +92,8 @@ void GameEngine::gameStart(){
     for (int k = 0; k < numOfPlayers; k++) {
         (player_list.at(k))->setReinforcementPool(50);
     }
+
+    shufflePlayerList();
 
     //initialize a card deck
     cout << "\n<Initialize Deck>" << endl;
