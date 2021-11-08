@@ -1,5 +1,10 @@
 #include "GameEngine.h"
+#include "Map.h"
+#include "Player.h"
 #include <iostream>
+#include <cmath>
+
+using namespace std;
 
 GameEngine::GameEngine() {
 	state = GameState::start;
@@ -42,6 +47,48 @@ void GameEngine::addPlayer() {
 void GameEngine::assignCountries() {
 	cout << "Countries have been sucessfully assigned to each player. Now you can go to the next step -- issueOrder" << endl;
 	setState(GameState::assign_reinforcement);
+}
+
+//
+void GameEngine::mainGameLoop() {
+	//Find order setup from gamestart()
+
+}
+
+void GameEngine::reinforcementPhase() {
+
+	//Loop over all players
+	for(auto i : players) {
+		i.reinforcements = floor(i.territories.size() / 3);				//Initial reinforcement pool = floor(#territories / 3)
+
+		//Does player own a continent?
+		vector <int> numTerritoriesPerContinent = { 0 };					//Vector to hold count of # of territories per continent
+		for(auto j : i.territories)
+			numTerritoriesPerContinent[j->getCID()]+=1;						//Increment count at position CID
+
+		int index = 1;
+		for(auto j : worldMap.continents) {									//Compare map continent size with player count
+			if (j->territoriesInContinent.size() == numTerritoriesPerContinent[index++]) {
+				i.reinforcements += worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
+			}
+		continue;
+		}
+
+		if (i.reinforcements < 3)
+			i.reinforcements = 3;
+	}
+}
+
+void GameEngine::issueOrdersPhase() {
+	for(auto i : players) {
+		i.issueOrder();
+	}
+}
+
+void GameEngine::executeOrdersPhase() {
+	for(auto i : players) {
+	
+	}
 }
 
 //issue the order

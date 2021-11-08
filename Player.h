@@ -1,6 +1,9 @@
 #pragma once
 #include<list>
 #include<iostream>
+#include<vector>
+#include "Map.h"
+#include "Cards.h"
 using namespace std;
 
 class Order {
@@ -22,27 +25,39 @@ public:
 };
 class player {
 public:
-	int territories[10];
+	vector <Territory*> territories;
 
 	int ahandofCards;
+	vector <Card*> cards;
+
+	int reinforcements;
+
+	int pID;
 
 	list<int>toAttacklist;
 
 	list<int>todefendlist;
 
 	list<Order>OrderList;
+
 public:
 	void printList(const list<int>& L);
+
+	void printAdjacentTerritories();
+
+	void printTerritories();
 
 	int getsize();
 
 	void showPlayer();
 
-	std::list<int> todefend(int* territories);
+	void showCards();
 
-	std::list<int>toAttack(int* territories);
+	std::list<int> todefend(const string& s);
 
-	std::list<Order> issueOrder(int country, string order, int target);
+	std::list<int>toAttack(const string& s);
+
+	std::list<Order> issueOrder(string order);
 
 	void printOrder(list<Order>& L);
 

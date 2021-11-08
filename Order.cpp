@@ -40,15 +40,17 @@ void Deploy::execute() {
 }
 
 
-Advance::Advance(int playID, int territoryID, int new_territoryID) {
+Advance::Advance(int playID, int territoryID, int new_territoryID, int numSoldiers) {
 	this->playid = playID;
 	this->territoryid = territoryID;
 	this->new_territoryid = new_territoryID;
+	this-> numSoldiers = numSoldiers;
 }
 Advance::Advance(const Advance& o1) {
 	this->playid = o1.playid;
 	this->territoryid = o1.territoryid;
 	this->new_territoryid = o1.new_territoryid;
+	this->numSoldiers = o1.numSoldiers;
 }
 bool Advance::validate() {
 	return true;
@@ -62,11 +64,11 @@ void Advance::execute() {
 }
 
 
-Bomb::Bomb(int territoryID) {
-	this->territoryid = territoryID;
+Bomb::Bomb(int oppTerritory) {
+	this->oppTerritory = oppTerritory;
 }
 Bomb::Bomb(const Bomb& o1) {
-	this->territoryid = o1.territoryid;
+	this->oppTerritory = o1.oppTerritory;
 }
 bool Bomb::validate() {
 	return true;
@@ -75,7 +77,7 @@ bool Bomb::validate() {
 void Bomb::execute() {
 	// map.update_armies(target_player, territories, 0.5)
 	std::cout << info << std::endl;
-	std::cout << "the armies on " << territoryid << " territory is reduced.";
+	std::cout << "the armies on " << oppTerritory << " territory is reduced.";
 }
 
 

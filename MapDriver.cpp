@@ -7,7 +7,8 @@ int main() {
     MapLoader map;
     map.setMapFile("europe.map");
     map.readMap();
-    map.worldMap.validate();
+    worldMap.displayContinents();
+    //map.worldMap.validate();
 
     return 0;
 }

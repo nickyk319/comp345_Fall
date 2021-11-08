@@ -43,24 +43,28 @@ public:
 
     void displayBorders();
 };
+
 class Continent {
 public:
     int cID;    //Continent ID
+    int bonus;
     string cName;   //Continent Name
     vector<Territory*> territoriesInContinent; //List of Territories in Continent
     set<int> connectedContinents;    //Adjacent Continents
 
     //Constructors
     Continent();
-    Continent(string cName, int cID);
+    Continent(string cName, int cID, int bonus);
 
     //Getters
     int getCID();
+    int getBonus();
     string getCName();
     vector<Territory*> getTerritoriesInContinent();
     set<int> getConnectedContinent();
     bool isConnected();
 };
+
 class Map {
 public:
     string mName;   //Map Name
@@ -77,25 +81,27 @@ public:
     string getMName();
     int getNumContinent();
     int getNumTerritory();
+    int getCountryIndex(int ID);
     vector<Territory*> getTerritories();
+    void dfs(int i, set <bool>& visited);
 
     //Setters
     void setMName(string mName);
 
     void displayTerritories();
     void displayContinents();
-    void dfs(int i, vector<bool>& visited);
+    void dfs(int i, vector<bool>& visited,int leng);
     void ccs(vector<bool>& visited);
     bool validate();
     bool connected();
     bool subgraphs();
     bool oneContinent();
-
+    bool belong_Onecontinent();
+    bool continentMatched(int continentID);
 };
 
 class MapLoader {
 public:
-    Map worldMap;
     string mFile;
 
     MapLoader();
@@ -103,11 +109,14 @@ public:
     string getMapFile();
     void setMapFile(const string& mf);
     vector<string> parseString(const string& s);
-    vector<int> parseStringBorder(const string& s);
     void readMap();
 };
 
 //Global Functions
 ostream& operator << (ostream& out, const Continent& c);
 ostream& operator << (ostream& out, const Territory& t);
+vector<int> parseStringToInt(const string& s);
 #endif
+
+//Global Variables
+static Map worldMap;

@@ -3,7 +3,6 @@
 #include "Cards.h"
 //#include "Map.h"
 #include "Order.h"
-#include "OrdersList.h"
 
 
 enum class GameState {
@@ -76,7 +75,17 @@ public:
 	void assignCountries();
 	// Assign every country in the map to all players in round robin fashion.
 
+	void mainGameLoop();
+	//
 
+	void reinforcementPhase();
+	//
+
+	void issueOrdersPhase();
+	//
+
+	void executeOrdersPhase();
+	//
 
 	void issueOrder();
 	// call the issue order function of each player
@@ -101,5 +110,6 @@ public:
 	void end() {
 		exit(0);
 	}
+
 
 };
