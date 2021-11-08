@@ -1,75 +1,78 @@
 #include<iostream>
-#include<list>
-#include"Player.h"
+#include <list>
+#include "Player.h"
 using namespace std;
 
+Player::Player()
+{
+    name = "default";
+    reinforcementPool = 50;
 
-
-
-void Order::setcountry(int country) {
-	m_country = country;
 }
-void Order::setorder(string order) {
-	m_order = order;
+
+//added constructor
+Player::Player(string s)
+{
+    this->name = s;
+
 }
-void Order::settarget(int target) {
-	m_target = target;
+string Player::getName() {
+    return this->name;
 }
-	
-void player::printList(const list<int>& L) {
-			for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-				cout << *it << " ";
-			}
-			cout << endl;
-		}
-int player::getsize() {
-			int size = sizeof(territories) / sizeof(territories[0]);
-			return size;
-		}
 
-void player::showPlayer() {
-		
-			cout << "This player has:\ncountry:" << getsize() << " card:" << ahandofCards << endl;
-		}
+//Four parameter constructor
+Player::Player(int reinforcementPool,string name, vector<Territory*> t, vector<Card*> h, vector<Order*> o)
+{
+    this->reinforcementPool = reinforcementPool;
+    this->name = name;
+    this->territory = t;
+    this->handCard = h;
+    this->orderList = o;
+}
 
-std::list<int> player::todefend(int* territories) {
 
-			for (int i = 0; i < getsize() - 1; i++) {
-				if (territories != 0) {
-					todefendlist.push_back(territories[i]);
-				}
-			}
-			
-			return todefendlist;
-		}
 
-std::list<int> player::toAttack(int* territories) {
+//Copy constructor (Deep copy)
+Player::Player(const Player& p)
+{
+    this->reinforcementPool = p.reinforcementPool;
+    this->name = p.name;
+    this->territory = p.territory;
+    this->handCard = p.handCard;
+    this->orderList = p.orderList;
 
-			for (int i = 0; i < getsize() - 1; i++) {
-				if (territories != 0) {
-					toAttacklist.push_back(territories[i]+1);
-				}
-			}
-			
-			return toAttacklist;
-		}
+}
 
-std::list<Order> player::issueOrder(int country, string order, int target) {
-			Order x;
-			x.setcountry(country);
-			x.setorder(order);
-			x.settarget(target);
-			OrderList.push_back(x);
-			return OrderList;
-		}
-		
-		void player::printOrder(list<Order> &L) {
-			cout << " listoforder: \n" << endl;
-			for (list<Order>::iterator t = L.begin(); t != L.end();t++) {
-				cout << (*t).m_country << " is going to"<<(*t).m_order<<" coutry "<<(*t).m_target<<endl;
-			}
-			cout << endl;
-		}
+//added assignment operator
+Player& Player::operator=(const Player& player)
+{
+    this->name = player.name;
+    this->reinforcementPool = player.reinforcementPool;
+    this->territory = player.territory;
+    this->handCard = player.handCard;
+    this->orderList = player.orderList;
+    return *this;
+}
+
+//Destructor
+Player::~Player()
+{
+    name = "";
+    reinforcementPool = 0;
+    territory.clear();
+    handCard.clear();
+    for (auto order : orderList)
+    {
+        delete order;
+    }
+    orderList.clear();
+    //release memory
+    vector<Territory*>().swap(territory);
+    vector<Card*>().swap(handCard);
+    vector<Order*>().swap(orderList);
+}
+
+
 
 
 

@@ -1,9 +1,10 @@
 ﻿#pragma once
 
+#include <string>
 #include "Cards.h"
-//#include "Map.h"
+#include "Map.h"
 #include "Order.h"
-#include "OrdersList.h"
+#include "Player.h"
 
 
 enum class GameState {
@@ -17,9 +18,18 @@ private:
 	OrdersList* ol;
 	Deck* deck;
 	int numOfPlayers;
+    string playerName;
+    string inputMapFile;
+    MapLoader *mapLoaded;
+    vector<Player *> player_list;						//initialized Player Array for the gamePlayer array
+    vector<Territory *> territory_list;
+
 
 public:
 	GameEngine();
+    int convert_name_to_id();
+    void startUpPhase();
+    void gameStart();
 
 	string stateToString() {
 		switch (state) {

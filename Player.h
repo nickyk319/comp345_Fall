@@ -1,42 +1,40 @@
 #pragma once
 #include<list>
 #include<iostream>
+#include "Order.h"
+#include "Map.h"
+#include "Cards.h"
+#include "GameEngine.h"
 using namespace std;
 
-class Order {
+class Player {
+
+private:
+    string name;
+    int reinforcementPool;
+    vector<Territory*> territory;
+    vector<Card*> handCard;
+    vector<Order*> orderList;
+
+    //friend classes
+    friend class Card;
+    friend class GameEngine;
+    friend class Map;
+
 public:
-	int m_country;
+    Player();       // Default constructor
+    Player(string); //added
+    Player(int,string, vector<Territory*> territories, vector<Card*> handCard, vector<Order*> order); //Constructor
+    Player(const Player &p); //Copy constructor
+    Player& operator = (const Player& ); //added
+    ~Player(); //Destructor
 
-	string m_order;
-
-	int m_target;
-
-public:
-	void setcountry(int country);
-
-
-		void setorder(string order);
-
-
-		void settarget(int target);
-};
-class player {
-public:
-	int territories[10];
-
-	int ahandofCards;
-
-	list<int>toAttacklist;
-
-	list<int>todefendlist;
-
-	list<Order>OrderList;
-public:
+    string getName();
 	void printList(const list<int>& L);
 
 	int getsize();
 
-	void showPlayer();
+
 
 	std::list<int> todefend(int* territories);
 
