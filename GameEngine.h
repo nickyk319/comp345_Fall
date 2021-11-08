@@ -15,6 +15,7 @@ class GameEngine {
 
 private:
 	GameState state;
+    MapLoader *maploaded;
 	OrdersList* ol;
 	Deck* deck;
     Hand *hand;
@@ -22,8 +23,7 @@ private:
     const int MAX_NUM_PLAYER = 6;
     string playerName;
     string inputMapFile;
-    MapLoader mapLoaded;
-    vector<Player *> player_list;						//initialized Player Array for the gamePlayer array
+    vector<Player *> player_list;
     vector<Territory *> territory_list;
 
 
@@ -89,7 +89,17 @@ public:
 	void assignCountries();
 	// Assign every country in the map to all players in round robin fashion.
 
+    void mainGameLoop();
+    //
 
+    void reinforcementPhase();
+    //
+
+    void issueOrdersPhase();
+    //
+
+    void executeOrdersPhase();
+    //
 
 	void issueOrder();
 	// call the issue order function of each player

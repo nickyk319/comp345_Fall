@@ -5,55 +5,53 @@ using namespace std;
 
 Player::Player()
 {
-    name = "default";
-    reinforcementPool = 0;
+    playerName = "default";
+    reinforcements = 0;
+    pID = 0;
 }
 
-//added constructor
-Player::Player(string s)
+Player::Player(int id, string name)
 {
-    this->name = s;
+    this->pID = id;
+    this->playerName = name;
 
 }
 string Player::getName() {
-    return this->name;
+    return this->playerName;
 }
 
 //Four parameter constructor
-Player::Player(int reinforcementPool,string name, vector<Territory*> t, vector<Card*> h, vector<Order*> o)
+Player::Player(int PID, int reinforcements,string playerName, vector<Territory*> t, vector<Card*> h, vector<Order*> o)
 {
-    this->reinforcementPool = reinforcementPool;
-    this->name = name;
-    this->territory = t;
+    this->reinforcements = reinforcements;
+    this->playerName = playerName;
+    this->territories = t;
     this->handCard = h;
     this->orderList = o;
 }
 
-
-
 //Copy constructor (Deep copy)
 Player::Player(const Player& p)
 {
-    this->reinforcementPool = p.reinforcementPool;
-    this->name = p.name;
-    this->territory = p.territory;
+    this->reinforcements = p.reinforcements;
+    this->playerName = p.playerName;
+    this->territories = p.territories;
     this->handCard = p.handCard;
     this->orderList = p.orderList;
-
 }
 
 //added assignment operator
 Player& Player::operator=(const Player& player)
 {
-    this->name = player.name;
-    this->reinforcementPool = player.reinforcementPool;
-    this->territory = player.territory;
+    this->playerName = player.playerName;
+    this->reinforcements = player.reinforcements;
+    this->territories = player.territories;
     this->handCard = player.handCard;
     this->orderList = player.orderList;
     return *this;
 }
 std::ostream &operator<<(std::ostream &output, const Player &player) {
-    output << "\nThe player name is: " << player.name << endl;
+    output << "\nThe player name is: " << player.playerName << endl;
     output << "\nThe cards in hand are:"  << endl;
     for (auto & card : player.handCard) {
         output << card->cardTypeToString(card->getType());
@@ -65,9 +63,9 @@ std::ostream &operator<<(std::ostream &output, const Player &player) {
 //Destructor
 Player::~Player()
 {
-    name = "";
-    reinforcementPool = 0;
-    territory.clear();
+    playerName = "";
+    reinforcements = 0;
+    territories.clear();
     handCard.clear();
     for (auto order : orderList)
     {
@@ -75,17 +73,17 @@ Player::~Player()
     }
     orderList.clear();
     //release memory
-    vector<Territory*>().swap(territory);
+    vector<Territory*>().swap(territories);
     vector<Card*>().swap(handCard);
     vector<Order*>().swap(orderList);
 }
 
 int Player:: getReinforcementPool(){
-    return reinforcementPool;
+    return reinforcements;
 }
 
 void Player:: setReinforcementPool(int army){
-    this->reinforcementPool = army;
+    this->reinforcements = army;
 }
 
 
