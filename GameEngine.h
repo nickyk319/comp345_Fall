@@ -17,10 +17,12 @@ private:
 	GameState state;
 	OrdersList* ol;
 	Deck* deck;
+    Hand *hand;
 	int numOfPlayers;
+    const int MAX_NUM_PLAYER = 6;
     string playerName;
     string inputMapFile;
-    MapLoader *mapLoaded;
+    MapLoader mapLoaded;
     vector<Player *> player_list;						//initialized Player Array for the gamePlayer array
     vector<Territory *> territory_list;
 
@@ -28,6 +30,7 @@ private:
 public:
 	GameEngine();
     int convert_name_to_id();
+    void initializePlayers();
     void startUpPhase();
     void gameStart();
 

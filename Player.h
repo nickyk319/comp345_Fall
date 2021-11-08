@@ -4,7 +4,7 @@
 #include "Order.h"
 #include "Map.h"
 #include "Cards.h"
-#include "GameEngine.h"
+
 using namespace std;
 
 class Player {
@@ -26,10 +26,13 @@ public:
     Player(string); //added
     Player(int,string, vector<Territory*> territories, vector<Card*> handCard, vector<Order*> order); //Constructor
     Player(const Player &p); //Copy constructor
+    friend std::ostream &operator<<(std::ostream &output, const Player &player);
     Player& operator = (const Player& ); //added
     ~Player(); //Destructor
 
     string getName();
+    int getReinforcementPool();
+    void setReinforcementPool(int);
 	void printList(const list<int>& L);
 
 	int getsize();

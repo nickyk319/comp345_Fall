@@ -143,6 +143,7 @@ Territory::Territory()
     numArmy = 0;
     tName = "";
     cName = "";
+    territoryPlayer = "default player";
     isAdjacent = false;
 }
 Territory::Territory(int tID, int cID, string tName, string cName)
@@ -162,6 +163,9 @@ int Territory::getPID() { return pID; }
 int Territory::getNumArmy() { return numArmy; }
 string Territory::getTName() { return tName; }
 string Territory::getCName() { return cName; }
+string Territory::getTerritoryPlayer() {
+    return territoryPlayer;
+}
 bool Territory::getAdjContinent() { return isAdjacent; }
 vector<int> Territory::getAdjTerritoryOnMap() { return adjTerritoryOnMap; }
 vector<int> Territory::getAdjTerritoryInContinent() { return adjTerritoriesInContinent; }
@@ -177,6 +181,9 @@ void Territory::setTID(int tID)
 void Territory::setTName(string tName)
 {
     tName = tName;
+}
+void Territory::setTerritoryPlayer(string p) {
+    territoryPlayer = p;
 }
 void Territory::setAdjContinent(bool canLeave)
 {
@@ -232,7 +239,7 @@ void MapLoader::readMap() {
     smatch mr;
 
     cout << getMapFile() << endl;
-    ifstream file(getMapFile());
+    ifstream file("/Users/nicky/CLionProjects/comp345_Fall/" + getMapFile());
     getline(file, text);
 
     if (regex_search(text, mr, rx)) {

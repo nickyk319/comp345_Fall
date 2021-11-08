@@ -6,8 +6,8 @@ GameEngine::GameEngine() {
 	state = GameState::start;
 	ol = new OrdersList();
 	deck = new Deck();
+    hand = new Hand();
 	numOfPlayers = 0;
-    player_list ;
 }
 
 void GameEngine::startUpPhase(){
@@ -20,14 +20,15 @@ void GameEngine::startUpPhase(){
 
 }
 
+
 //prompt the user to give a path for a map
 void GameEngine::loadMap() {
     //promp user to enter the name of the map file
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
     cin >> inputMapFile;
     //load map to game engine
-    mapLoaded->setMapFile(inputMapFile);
-    mapLoaded->readMap();
+    mapLoaded.setMapFile(inputMapFile);
+    mapLoaded.readMap();
 	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
 	setState(GameState::map_loaded);
 }
@@ -35,7 +36,7 @@ void GameEngine::loadMap() {
 //To see if the map is valid or invaild
 void GameEngine::validateMap() {
 	// 1. use the Map.validate() function to validate map.
-	if (mapLoaded->worldMap.validate()) {
+	if (mapLoaded.worldMap.validate()) {
 		cout << "The map you loaded is valid! Now you can go to next step -- add players!" << endl;
 		setState(GameState::map_validated);
 	}
@@ -67,13 +68,33 @@ void GameEngine::gameStart(){
     //assign territory to players in round-robin fashion
     cout << "\n The territories are assigned in the following order: " << endl;
 
-    for (int i = 0; i < mapLoaded->worldMap.territories.size(); i++) {
-        mapLoaded->worldMap.territories[i]->setTerritoryPlayer((player_list.at(i % numOfPlayers))->getName());
-        string territoryPlayer = mapLoaded->worldMap.territories[i]->getTerritoryPlayer();
-        string territoryName = mapLoaded->worldMap.territories[i]->getTName();
+    for (int i = 0; i < mapLoaded.worldMap.territories.size(); i++) {
+        mapLoaded.worldMap.territories[i]->setTerritoryPlayer((player_list.at(i % numOfPlayers))->getName());
+        string territoryPlayer = mapLoaded.worldMap.territories[i]->getTerritoryPlayer();
+        string territoryName = mapLoaded.worldMap.territories[i]->getTName();
 
-        cout << setw(12) << "Territory: " << territoryName << " owned by " <<  territoryPlayer << endl;
+        cout << setw(12) << "Territory: " << territoryName << ", owned by " <<  territoryPlayer << endl;
     }
+    //initialize 50 armies to each player
+    for (int k = 0; k < numOfPlayers; k++) {
+        (player_list.at(k))->setReinforcementPool(50);
+    }
+
+    //initialize a card deck
+    cout << "\n<Initialize Deck>" << endl;
+    cout << "\nThe size of deck now is " << endl;
+    cout << deck->getCards().size() << endl;
+    cout << "\nTake 2 cards from deck to hand:" << endl;
+    for(int i = 0; i < numOfPlayers; i++){
+        player_list[i]->handCard.push_back(deck->draw());
+        player_list[i]->handCard.push_back(deck->draw());
+    }
+
+    for(int i = 0; i < numOfPlayers; i++){
+        cout << *(player_list[i]) << endl;
+    }
+
+
 
 
 }

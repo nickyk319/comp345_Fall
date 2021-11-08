@@ -6,8 +6,7 @@ using namespace std;
 Player::Player()
 {
     name = "default";
-    reinforcementPool = 50;
-
+    reinforcementPool = 0;
 }
 
 //added constructor
@@ -53,6 +52,15 @@ Player& Player::operator=(const Player& player)
     this->orderList = player.orderList;
     return *this;
 }
+std::ostream &operator<<(std::ostream &output, const Player &player) {
+    output << "\nThe player name is: " << player.name << endl;
+    output << "\nThe cards in hand are:"  << endl;
+    for (auto & card : player.handCard) {
+        output << card->cardTypeToString(card->getType());
+        output << '\n';
+    }
+    return output;
+}
 
 //Destructor
 Player::~Player()
@@ -71,6 +79,16 @@ Player::~Player()
     vector<Card*>().swap(handCard);
     vector<Order*>().swap(orderList);
 }
+
+int Player:: getReinforcementPool(){
+    return reinforcementPool;
+}
+
+void Player:: setReinforcementPool(int army){
+    this->reinforcementPool = army;
+}
+
+
 
 
 
