@@ -58,7 +58,7 @@ void GameEngine::mainGameLoop() {
 void GameEngine::reinforcementPhase() {
 
 	//Loop over all players
-	for(auto i : players) {
+	for(auto i : players) {												//Need Player Order from part 2
 		i.reinforcements = floor(i.territories.size() / 3);				//Initial reinforcement pool = floor(#territories / 3)
 
 		//Does player own a continent?
