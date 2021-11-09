@@ -1,48 +1,70 @@
 #pragma once
 #include<list>
 #include<iostream>
+#include<vector>
+#include "Order.h"
+#include "Map.h"
+#include "Cards.h"
+
 using namespace std;
 
-class Order {
-public:
-	int m_country;
-
-	string m_order;
-
-	int m_target;
+class Player {
 
 public:
-	void setcountry(int country);
+    vector <Territory*> territories;
 
+    int ahandofCards;
 
-		void setorder(string order);
+    vector <Card*> cards;
+    vector<Card*> handCard;
+    vector<Order*> orderList;
 
+    string playerName;
 
-		void settarget(int target);
-};
-class player {
+    int reinforcements;
+
+    int pID;
+
+    list<int>toAttacklist;
+
+    list<int>todefendlist;
+
+    list<Order>OrderList;
+
+    //friend classes
+    friend class Card;
+    friend class GameEngine;
+    friend class Map;
+
 public:
-	int territories[10];
+    Player();       // Default constructor
+    Player(int, string);
+    Player(int, int, string, vector<Territory*> territories, vector<Card*> handCard, vector<Order*> order);
+    Player(const Player &p); //Copy constructor
+    friend std::ostream &operator<<(std::ostream &output, const Player &player);
+    Player& operator = (const Player& );
+    ~Player(); //Destructor
 
-	int ahandofCards;
-
-	list<int>toAttacklist;
-
-	list<int>todefendlist;
-
-	list<Order>OrderList;
-public:
+    string getName();
+    int getReinforcementPool();
+    void setReinforcementPool(int);
 	void printList(const list<int>& L);
 
-	int getsize();
+    void printAdjacentTerritories();
 
-	void showPlayer();
+    void printTerritories();
 
-	std::list<int> todefend(int* territories);
+    int getsize();
 
-	std::list<int>toAttack(int* territories);
+    void showPlayer();
 
-	std::list<Order> issueOrder(int country, string order, int target);
+    void showCards();
+
+    std::list<int> todefend(const string& s);
+
+    std::list<int>toAttack(const string& s);
+
+    std::list<Order> issueOrder(string order);
 
 	void printOrder(list<Order>& L);
 
