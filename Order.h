@@ -40,7 +40,8 @@ public:
 	int playid;
 	int territoryid;
 	int new_territoryid;
-	Advance(int playID, int territoryID, int new_territoryID);
+	int numSoldiers;
+	Advance(int playID, int territoryID, int new_territoryID, int numSoldiers);
 	Advance(const Advance& o1);
 	bool validate() override;
 	void execute() override;
@@ -51,8 +52,8 @@ class Bomb : public Order {
 private:
 	std::string info = "destroy half of the armies located on an opponents territory that is adjacent to one of the current players territories.";
 public:
-	int territoryid;
-	Bomb(int territoryID);
+	int oppTerritory;
+	Bomb(int oppTerritory);
 	Bomb(const Bomb& o1);
 	bool validate() override;
 	void execute() override;

@@ -1,6 +1,9 @@
 #include<iostream>
 #include <list>
+#include <vector>
 #include "Player.h"
+#include "Map.h"
+#include "Order.h"
 using namespace std;
 
 Player::Player()
@@ -274,12 +277,4 @@ void Player::printTerritories() {
     for (auto i: territories)
         cout << i->getTID() << " ";
 }
-
-
-
-
-
-
-
-
 
