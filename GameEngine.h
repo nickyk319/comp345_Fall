@@ -1,8 +1,10 @@
 ﻿#pragma once
 
+#include <string>
 #include "Cards.h"
-//#include "Map.h"
+#include "Map.h"
 #include "Order.h"
+#include "Player.h"
 
 
 enum class GameState {
@@ -13,12 +15,25 @@ class GameEngine {
 
 private:
 	GameState state;
+    MapLoader *maploaded;
 	OrdersList* ol;
 	Deck* deck;
+    Hand *hand;
 	int numOfPlayers;
+    const int MAX_NUM_PLAYER = 6;
+    string playerName;
+    string inputMapFile;
+    vector<Player *> player_list;
+    vector<Territory *> territory_list;
+
 
 public:
 	GameEngine();
+    int convert_name_to_id();
+    void initializePlayers();
+    void shufflePlayerList();
+    void startUpPhase();
+    void gameStart();
 
 	string stateToString() {
 		switch (state) {
@@ -75,17 +90,17 @@ public:
 	void assignCountries();
 	// Assign every country in the map to all players in round robin fashion.
 
-	void mainGameLoop();
-	//
+    void mainGameLoop();
+    //
 
-	void reinforcementPhase();
-	//
+    void reinforcementPhase();
+    //
 
-	void issueOrdersPhase();
-	//
+    void issueOrdersPhase();
+    //
 
-	void executeOrdersPhase();
-	//
+    void executeOrdersPhase();
+    //
 
 	void issueOrder();
 	// call the issue order function of each player
@@ -110,6 +125,5 @@ public:
 	void end() {
 		exit(0);
 	}
-
 
 };
