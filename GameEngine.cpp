@@ -119,7 +119,9 @@ void GameEngine::assignCountries() {
 //
 void GameEngine::mainGameLoop() {
     //Find order setup from gamestart()
-
+ GameEngine::reinforcementPhase;
+    GameEngine::issueOrdersPhase;
+    GameEngine::executeOrdersPhase;
 }
 
 void GameEngine::reinforcementPhase() {
