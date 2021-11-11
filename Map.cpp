@@ -211,7 +211,7 @@ bool Map::validate()
         cout << "One country has more than one contient." << endl;
     }
     else {
-        cout << "Map is valid." << endl;
+        cout << "Validation progress finished." << endl;
         return true;
     }
 }
@@ -228,7 +228,7 @@ int Map::getCountryIndex(int ID) {
     return index;
 }
 void Map::dfs(int i, vector <bool>& visited, int leng) {
-    visited[i] = true;
+    //visited[i] = true;
     for (int x = 1; x < leng; x++) {
 
         Territory temp = *(territories.at(x));

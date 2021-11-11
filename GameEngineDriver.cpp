@@ -6,7 +6,16 @@
 int main() {
 	GameEngine* ge = new GameEngine();
 	ge->startUpPhase();
-	//ge->gameStart();
+	if (ge->getState() == GameState::map_loaded) {
+		ge->validateMap();
+		ge->addPlayer();
+		ge->gameStart();
+		ge->reinforcementPhase();
+	}
+	else {
+		
+	}
+	
 	while (true) {
 		cout << "---------- " << ge->stateToString() << " ------------" << endl;
 		string command = "";

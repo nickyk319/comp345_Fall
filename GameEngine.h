@@ -8,7 +8,7 @@
 
 
 enum class GameState {
-	start, map_loaded, map_validated, players_added, assign_reinforcement, issue_orders, execute_orders, win
+	start, map_loaded, map_validated, players_added, assign_reinforcement, issue_orders, execute_orders, win, finsihed
 };
 
 class GameEngine {
@@ -23,12 +23,13 @@ private:
     const int MAX_NUM_PLAYER = 6;
     string playerName;
     string inputMapFile;
-    vector<Player *> player_list;
+    
     vector<Territory *> territory_list;
 
 
 public:
 	GameEngine();
+	vector<Player*> player_list;
     int convert_name_to_id();
     void initializePlayers();
     void shufflePlayerList();
