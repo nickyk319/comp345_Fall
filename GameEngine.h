@@ -83,6 +83,7 @@ public:
 
 
 	void addPlayer();
+	void toupper(string& s);
 	// 1. ask for user input for number of players
 	// 2. use loop to create players and put them into a playerlist
 	// players added successfully, print message. 

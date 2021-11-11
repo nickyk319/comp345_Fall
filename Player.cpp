@@ -127,19 +127,20 @@ std::list<int> Player::toAttack(const string& s) {
 
 bool Player::remove() {
     if (territories.size() == 0) {
-        cout << "player: " << pID << " elimated" << endl;
+        cout << "player: " << pID + 1 << " elimated" << endl;
 
         return true;
     }
 }
 bool Player::win() {
     if (territories.size() == worldMap.getNumTerritory()){
-        cout << "player: " << pID << " win" << endl;
+        cout << "player: " << pID+1 << " win" << endl;
         return true;
         }
 }
 void Player::issueOrder() {
-    cout << "ISSUE ORDER: \n" << endl;
+    cout << "\nISSUE ORDER: \n" << endl;
+    cout << "\nPlayer " << playerName << " id: " << pID+1 << " is making decisions \n"<<endl;
     cout << "Enter Order of Territories to Attack" ;
     printAdjacentTerritories();
     string attackInput;
@@ -155,7 +156,7 @@ void Player::issueOrder() {
     cout << "\nYou selected: " << defendInput;
 
     //Deploy
-    cout << "DEPLOY ORDER: \n" << endl;
+    cout << "\nDEPLOY ORDER: \n" << endl;
     while (reinforcements >= 0) {
         cout << "Reinforcements: " << reinforcements;
         cout << "\nSelect a Territory to Deploy to";
@@ -164,23 +165,23 @@ void Player::issueOrder() {
         cin >> tID;
 
         cout << "\nHow many reinformcements would you like to deploy?";
-        cout << "\n" << worldMap.territories[tID-1];
+       // cout << "\n" << worldMap.territories[tID-1];
         int numDeploy;
         cin >> numDeploy;
 
         reinforcements-=numDeploy;
         Deploy* d = new Deploy(pID, tID, numDeploy);
         cout << "\nAdded " << numDeploy << " Reinforcements!";
-        cout << "\n" << worldMap.territories[tID-1];
+      //  cout << "\n" << worldMap.territories[tID-1];
         OrderList.push_back(*d);
     }
 
     //Advance
     cout << "ADVANCE ORDER: \n" << endl;
     for (auto i : todefendlist) {
-        cout << "Defending " << worldMap.territories[i-1];
+        //cout << "Defending " << worldMap.territories[i-1];
         cout << "\nWhich Territory are you advancing to?\n";
-        worldMap.territories[i-1]->displayBorders();
+       // worldMap.territories[i-1]->displayBorders();
         int tID;
         int num;
         cin >> tID;
@@ -199,7 +200,7 @@ void Player::issueOrder() {
     for (auto i : toAttacklist) {
         cout << "Attacking with " << worldMap.territories[i-1];
         cout << "\nWhich Territory are you attacking?\n";
-        worldMap.territories[i-1]->displayBorders();
+        //worldMap.territories[i-1]->displayBorders();
         int tID;
         cin >> tID;
         for (auto j : territories) {
@@ -274,7 +275,7 @@ void Player::issueOrder() {
 //}
 
 void Player::printAdjacentTerritories() {
-    cout << "Player " << pID << "'s Attackable Territories: ";
+    cout << "\nPlayer " << playerName << "'s Attackable Territories: ";
     vector <int> adjTerritories;
 
     for (auto i : territories) {
@@ -287,7 +288,7 @@ void Player::printAdjacentTerritories() {
 }
 
 void Player::printTerritories() {
-    cout << "Player " << pID << "'s Defendable Territories: ";
+    cout << "\nPlayer " << playerName << "'s Defendable Territories: ";
 
     for (auto i: territories)
         cout << i->getTID() << " ";

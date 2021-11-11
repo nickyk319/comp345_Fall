@@ -33,8 +33,9 @@ void GameEngine::startUpPhase(){
 void GameEngine::loadMap() {
     //promp user to enter the name of the map file
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
-    cin >> inputMapFile;
+   // cin >> inputMapFile;
     //load map to game engine
+    inputMapFile = "europe.map";
     MapLoader map;
     map.setMapFile(inputMapFile);
     ifstream fin(inputMapFile);
@@ -81,13 +82,23 @@ void GameEngine::addPlayer() {
     vector<Order*> order;
     for(int i = 0; i < numOfPlayers; i++){
         cout << "Please enter the player name for player ID: " << i + 1 << " Player: " << endl;
+        string playerName;
         cin >> playerName;
+        toupper(playerName);
         player_list.push_back(new Player(i, playerName));
         //cout << player_list.at(i) << endl;
     }
 	// 2. players added successfully, print message.
 	cout << "Valid number of players are created. Now you can go to next step -- assignCountries" << endl;
 	setState(GameState::players_added);
+}
+void GameEngine::toupper(string& s) {
+    int len = s.size();
+    for (int i = 0;i < len; i++) {
+        if (s[i] >= 'a' && s[i] <= 'z') {
+            s[i] -= 32;
+        }
+    }
 }
 
 //determine randomly the order of play of the players in the game
@@ -171,7 +182,9 @@ void GameEngine::reinforcementPhase() {
 
         if (i->reinforcements < 3)
             i->reinforcements = 3;
+        cout << "\nplayer: " << i->getName() << " has reinforcements: " << i->reinforcements << "\n";
     }
+    cout << "\nreinforcementPhase complete\n" << endl;
 }
 
 //Please uncomment this method when you finished
