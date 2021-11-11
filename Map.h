@@ -119,7 +119,6 @@ public:
 ostream& operator << (ostream& out, const Continent& c);
 ostream& operator << (ostream& out, const Territory& t);
 vector<int> parseStringToInt(const string& s);
-#endif
 
-//Global Variables
 static Map worldMap;
+#endif

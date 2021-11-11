@@ -125,7 +125,20 @@ std::list<int> Player::toAttack(const string& s) {
     return toAttacklist;
 }
 
-std::list<Order> Player::issueOrder(string order) {
+bool Player::remove() {
+    if (territories.size() == 0) {
+        cout << "player: " << pID << " elimated" << endl;
+
+        return true;
+    }
+}
+bool Player::win() {
+    if (territories.size() == worldMap.getNumTerritory()){
+        cout << "player: " << pID << " win" << endl;
+        return true;
+        }
+}
+void Player::issueOrder() {
     cout << "ISSUE ORDER: \n" << endl;
     cout << "Enter Order of Territories to Attack" ;
     printAdjacentTerritories();
@@ -249,6 +262,8 @@ std::list<Order> Player::issueOrder(string order) {
         }
     }
 }
+
+
 
 //void player::printOrder(list<Order> &L) {
 //    cout << " listoforder: \n" << endl;

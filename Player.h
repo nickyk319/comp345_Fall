@@ -64,7 +64,11 @@ public:
 
     std::list<int>toAttack(const string& s);
 
-    std::list<Order> issueOrder(string order);
+    bool remove();
+
+    bool win();
+
+    void issueOrder();
 
 	void printOrder(list<Order>& L);
 

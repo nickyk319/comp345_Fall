@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iomanip>
 #include <random>
+#include <fstream>
 
 using namespace std;
 
@@ -20,9 +21,10 @@ void GameEngine::startUpPhase(){
     //load map
     loadMap();
     //validate map
-    validateMap();
+    
+    //validateMap();
     //add players
-    addPlayer();
+ //  addPlayer();
 
 }
 
@@ -33,10 +35,22 @@ void GameEngine::loadMap() {
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
     cin >> inputMapFile;
     //load map to game engine
-    maploaded->setMapFile(inputMapFile);
-    maploaded->readMap();
-	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
-	setState(GameState::map_loaded);
+    MapLoader map;
+    map.setMapFile(inputMapFile);
+    ifstream fin(inputMapFile);
+    if (!fin) {
+        cout << "The map name is invalid! Pls double-check the map name and restart ur game! " << endl;
+        setState(GameState::finsihed);
+        
+    }
+    else {
+        cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
+        setState(GameState::map_loaded);
+        
+    }
+    //map.readMap();
+    //worldMap.displayContinents();
+	
 }
 
 //To see if the map is valid or invaild
@@ -57,6 +71,11 @@ void GameEngine::addPlayer() {
 	// 1. ask for user input for number of players
 	cout << "Enter the number of players you want to have (2-6): ";
 	cin >> numOfPlayers; // add input validation
+    while (numOfPlayers < 2 || numOfPlayers>6) {
+        cout << "Pls enter a valid number (2-6) ";
+        cin >> numOfPlayers; // add input validation again
+    }
+    
     vector<Territory*> territory;
     vector<Card*> card;
     vector<Order*> order;
@@ -64,6 +83,7 @@ void GameEngine::addPlayer() {
         cout << "Please enter the player name for player ID: " << i + 1 << " Player: " << endl;
         cin >> playerName;
         player_list.push_back(new Player(i, playerName));
+        //cout << player_list.at(i) << endl;
     }
 	// 2. players added successfully, print message.
 	cout << "Valid number of players are created. Now you can go to next step -- assignCountries" << endl;
@@ -78,6 +98,7 @@ void GameEngine::shufflePlayerList() {
 }
 
 void GameEngine::gameStart(){
+    
     //assign territory to players in round-robin fashion
     cout << "\n The territories are assigned in the following order: " << endl;
 
@@ -91,7 +112,9 @@ void GameEngine::gameStart(){
     //initialize 50 armies to each player
     for (int k = 0; k < numOfPlayers; k++) {
         (player_list.at(k))->setReinforcementPool(50);
+
     }
+    cout << "Every player has 50 armies at beginning. Good Luck!";
 
     shufflePlayerList();
 
@@ -119,9 +142,12 @@ void GameEngine::assignCountries() {
 //
 void GameEngine::mainGameLoop() {
     //Find order setup from gamestart()
- GameEngine::reinforcementPhase;
-    GameEngine::issueOrdersPhase;
-    GameEngine::executeOrdersPhase;
+    cout << "reinforcementPhase"<<endl;
+ GameEngine::reinforcementPhase();
+ cout << "issueOrdersPhase" << endl;
+    GameEngine::issueOrdersPhase();
+    cout << "executeOrdersPhase" << endl;
+    GameEngine::executeOrdersPhase();
 }
 
 void GameEngine::reinforcementPhase() {
@@ -149,11 +175,11 @@ void GameEngine::reinforcementPhase() {
 }
 
 //Please uncomment this method when you finished
-//void GameEngine::issueOrdersPhase() {
-//    for(auto i : player_list) {
-//        i->issueOrder();
-//    }
-//}
+void GameEngine::issueOrdersPhase() {
+    for(auto i : player_list) {
+        i->issueOrder();
+    }
+}
 
 void GameEngine::executeOrdersPhase() {
     for(auto i : player_list) {
