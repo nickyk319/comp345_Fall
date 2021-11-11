@@ -12,9 +12,7 @@ int main() {
 		ge->gameStart();
 		ge->reinforcementPhase();
 	}
-	else {
-		
-	}
+
 	
 	while (true) {
 		cout << "---------- " << ge->stateToString() << " ------------" << endl;

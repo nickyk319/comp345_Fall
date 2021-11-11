@@ -48,8 +48,8 @@ void GameEngine::loadMap() {
         setState(GameState::map_loaded);
         
     }
-    //map.readMap();
-    //worldMap.displayContinents();
+    map.readMap(inputMapFile);
+    worldMap.displayContinents();
 	
 }
 

@@ -112,7 +112,7 @@ public:
     string getMapFile();
     void setMapFile(const string& mf);
     vector<string> parseString(const string& s);
-    void readMap();
+    void readMap(string mapname);
 };
 
 //Global Functions

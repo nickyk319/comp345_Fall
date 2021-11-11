@@ -291,7 +291,7 @@ vector<string> MapLoader::parseString(const string& s) {
     }
     return tokens;
 }
-void MapLoader::readMap() {
+void MapLoader::readMap(string mapname) {
     int cNum = 0;
     int tNum = 0;
     int adjRow = 0;
@@ -300,7 +300,7 @@ void MapLoader::readMap() {
     smatch mr;
 
     cout << getMapFile() << endl;
-    ifstream file("Users\Administrator\source\repos\nickyk319\comp345_Fall" + getMapFile());
+    ifstream file(mapname);
     getline(file, text);
 
     if (regex_search(text, mr, rx)) {
