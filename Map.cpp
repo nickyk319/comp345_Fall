@@ -300,7 +300,7 @@ void MapLoader::readMap() {
     smatch mr;
 
     cout << getMapFile() << endl;
-    ifstream file("/Users/nicky/CLionProjects/comp345_Fall/" + getMapFile());
+    ifstream file("Users\Administrator\source\repos\nickyk319\comp345_Fall" + getMapFile());
     getline(file, text);
 
     if (regex_search(text, mr, rx)) {

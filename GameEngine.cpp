@@ -20,9 +20,9 @@ void GameEngine::startUpPhase(){
     //load map
     loadMap();
     //validate map
-    validateMap();
+   // validateMap();
     //add players
-    addPlayer();
+ //  addPlayer();
 
 }
 
@@ -33,8 +33,10 @@ void GameEngine::loadMap() {
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
     cin >> inputMapFile;
     //load map to game engine
-    maploaded->setMapFile(inputMapFile);
-    maploaded->readMap();
+    MapLoader map;
+    map.setMapFile("europe.map");
+    //map.readMap();
+    //worldMap.displayContinents();
 	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
 	setState(GameState::map_loaded);
 }
@@ -119,9 +121,12 @@ void GameEngine::assignCountries() {
 //
 void GameEngine::mainGameLoop() {
     //Find order setup from gamestart()
- GameEngine::reinforcementPhase;
-    GameEngine::issueOrdersPhase;
-    GameEngine::executeOrdersPhase;
+    cout << "reinforcementPhase"<<endl;
+ GameEngine::reinforcementPhase();
+ cout << "issueOrdersPhase" << endl;
+    GameEngine::issueOrdersPhase();
+    cout << "executeOrdersPhase" << endl;
+    GameEngine::executeOrdersPhase();
 }
 
 void GameEngine::reinforcementPhase() {
@@ -149,11 +154,11 @@ void GameEngine::reinforcementPhase() {
 }
 
 //Please uncomment this method when you finished
-//void GameEngine::issueOrdersPhase() {
-//    for(auto i : player_list) {
-//        i->issueOrder();
-//    }
-//}
+void GameEngine::issueOrdersPhase() {
+    for(auto i : player_list) {
+        i->issueOrder();
+    }
+}
 
 void GameEngine::executeOrdersPhase() {
     for(auto i : player_list) {
