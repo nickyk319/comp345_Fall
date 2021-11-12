@@ -81,8 +81,8 @@ void GameEngine::gameStart(){
     cout << "\n The territories are assigned in the following order: " << endl;
 
     for (int i = 0; i < worldMap.territories.size(); i++) {
-        worldMap.territories[i]->setTerritoryPlayer((player_list.at(i % numOfPlayers))->getName());
-        string territoryPlayer = worldMap.territories[i]->getTerritoryPlayer();
+        worldMap.territories[i]->setPlayerID((player_list.at(i % numOfPlayers))->getPID());
+        string territoryPlayer = player_list.at(i % numOfPlayers)->getName();
         string territoryName = worldMap.territories[i]->getTName();
 
         cout << setw(12) << "Territory: " << territoryName << ", owned by " <<  territoryPlayer << endl;

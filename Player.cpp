@@ -19,6 +19,9 @@ Player::Player(int id, string name)
     this->playerName = name;
 
 }
+int Player::getPID() {
+    return this->pID;
+}
 string Player::getName() {
     return this->playerName;
 }
@@ -248,6 +251,7 @@ std::list<Order> Player::issueOrder(string order) {
             OrderList.push_back(*n);
         }
     }
+	return OrderList;
 }
 
 //void player::printOrder(list<Order> &L) {

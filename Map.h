@@ -13,7 +13,6 @@ public:
     int numArmy;
     string tName;   //Territory Name
     string cName;   //Continent Name
-    string territoryPlayer;
     bool isAdjacent;  //Connected Continent Check
 
     vector<int> adjTerritoryOnMap;  //List of Adjacent Territories on entire map
@@ -39,7 +38,7 @@ public:
     //Setters
     void setTID(int tID);
     void setTName(string tName);
-    void setTerritoryPlayer(string);
+    void setPlayerID(int);
     void setAdjContinent(bool canLeave);
 
     void displayBorders();

@@ -46,6 +46,7 @@ public:
     ~Player(); //Destructor
 
     string getName();
+    int getPID();
     int getReinforcementPool();
     void setReinforcementPool(int);
 	void printList(const list<int>& L);
