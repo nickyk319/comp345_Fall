@@ -10,7 +10,7 @@ int main() {
 		ge->validateMap();
 		ge->addPlayer();
 		ge->gameStart();
-		ge->mainGameLoop();
+		ge->reinforcementPhase();
 	}
 
 	
