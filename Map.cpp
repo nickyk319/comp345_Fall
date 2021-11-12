@@ -169,18 +169,18 @@ void Map::displayContinents()
 //Map is valid if all continents are connected
 bool Map::validate()
 {
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     set<int> visitedContinents;         //Set of Visited Continents
     set<int>::const_iterator iterator;   //Iterator to iterate over map and modify territories
     vector<bool> visited(length);
 
     //Check if Continents are connected
     for (int i = 0; i < length; i++) {
-        if (this->continents[i]->isConnected()) {
-            cout << "Map Continent " << this->continents[i]->getCName() << " is connected." << endl;
+        if (worldMap.continents[i]->isConnected()) {
+            cout << "Map Continent " << worldMap.continents[i]->getCName() << " is connected." << endl;
         }
         else {
-            cout << "MAP IS INVALID - Map Continent " << this->continents[i]->getCName() << " is not connected." << endl;
+            cout << "MAP IS INVALID - Map Continent " << worldMap.continents[i]->getCName() << " is not connected." << endl;
             break;
         }
     }
@@ -189,7 +189,7 @@ bool Map::validate()
     dfs(0, visited,length);
     //Iterate through continents and add visited continents to visited vector
     for (int i = 0; i < length; i++) {
-        for (iterator = this->continents[i]->connectedContinents.begin(); iterator != this->continents[i]->connectedContinents.end(); ++iterator) {
+        for (iterator = worldMap.continents[i]->connectedContinents.begin(); iterator != worldMap.continents[i]->connectedContinents.end(); ++iterator) {
             visitedContinents.insert(*iterator);
         }
     }
@@ -197,7 +197,7 @@ bool Map::validate()
     //After iteration, check if the # visited continents = # of total continents to validate map
     if (visitedContinents.size() != length) {
         if (visitedContinents.size() > length ) {
-            cout << "Continent Numbers:"  << this->continents.size()  << endl;
+            cout << "Continent Numbers:"  << worldMap.continents.size()  << endl;
             cout << "Map loaded successfully!" << endl;
         }
         else if (visitedContinents.size() < length) {
@@ -216,10 +216,10 @@ bool Map::validate()
     }
 }
 int Map::getCountryIndex(int ID) {
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     int index = -1;
     for (int x = 0; x < length; x++) {
-        Territory temp = *(this->territories.at(x));
+        Territory temp = *(worldMap.territories.at(x));
         if (temp.getCID() == ID) {
             index = x;
             break;
@@ -246,7 +246,7 @@ void Map::dfs(int i, vector <bool>& visited, int leng) {
 }
 bool Map::belong_Onecontinent() {
     bool belongTo = true;
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     for (int x = 0; x < length; x++) {
         Territory temp = *(territories.at(x));
         int tempID = temp.getBelongedContinentID();

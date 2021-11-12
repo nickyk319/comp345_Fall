@@ -32,8 +32,8 @@ void GameEngine::loadMap() {
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
     cin >> inputMapFile;
     //load map to game engine
-    maploaded->worldMap.setMapFile(inputMapFile);
-    maploaded->maploaded->worldMap.readMap();
+    maploaded->setMapFile(inputMapFile);
+    maploaded->readMap();
 	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
 	setState(GameState::map_loaded);
 }
@@ -41,7 +41,7 @@ void GameEngine::loadMap() {
 //To see if the map is valid or invaild
 void GameEngine::validateMap() {
 	// 1. use the Map.validate() function to validate map.
-	if (maploaded->worldMap.validate()) {
+	if (worldMap.validate()) {
 		cout << "The map you loaded is valid! Now you can go to next step -- add players!" << endl;
 		setState(GameState::map_validated);
 	}
