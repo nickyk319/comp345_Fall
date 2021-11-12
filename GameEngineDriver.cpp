@@ -6,7 +6,7 @@
 int main() {
 	GameEngine* ge = new GameEngine();
     ge->startUpPhase();
-    ge->gameStart();
+
 //	while (true) {
 //		cout << "---------- " << ge->stateToString() << " ------------" << endl;
 //		string command = "";

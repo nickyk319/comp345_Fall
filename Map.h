@@ -1,6 +1,4 @@
-#ifndef _MAP_H
-#define _MAP_H
-
+#pragma once
 #include <vector>
 #include <set>
 #include <string>
@@ -15,7 +13,6 @@ public:
     int numArmy;
     string tName;   //Territory Name
     string cName;   //Continent Name
-    string territoryPlayer;
     bool isAdjacent;  //Connected Continent Check
 
     vector<int> adjTerritoryOnMap;  //List of Adjacent Territories on entire map
@@ -41,7 +38,7 @@ public:
     //Setters
     void setTID(int tID);
     void setTName(string tName);
-    void setTerritoryPlayer(string);
+    void setPlayerID(int);
     void setAdjContinent(bool canLeave);
 
     void displayBorders();
@@ -101,14 +98,15 @@ public:
     bool oneContinent();
     bool belong_Onecontinent();
     bool continentMatched(int continentID);
+
+    static Map worldMap;
 };
 
 class MapLoader {
+
 public:
     string mFile;
-
     MapLoader();
-
     string getMapFile();
     void setMapFile(const string& mf);
     vector<string> parseString(const string& s);
@@ -119,7 +117,7 @@ public:
 ostream& operator << (ostream& out, const Continent& c);
 ostream& operator << (ostream& out, const Territory& t);
 vector<int> parseStringToInt(const string& s);
-#endif
+
 
 //Global Variables
-static Map worldMap;
+//static Map worldMap;

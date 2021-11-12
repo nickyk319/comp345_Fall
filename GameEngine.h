@@ -15,16 +15,17 @@ class GameEngine {
 
 private:
 	GameState state;
-    MapLoader *maploaded;
+    MapLoader* maploaded;
 	OrdersList* ol;
 	Deck* deck;
     Hand *hand;
 	int numOfPlayers;
     const int MAX_NUM_PLAYER = 6;
+    const int MIN_NUM_PLAYER = 2;
     string playerName;
     string inputMapFile;
     vector<Player *> player_list;
-    vector<Territory *> territory_list;
+
 
 
 public:

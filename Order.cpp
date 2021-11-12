@@ -44,13 +44,13 @@ Advance::Advance(int playID, int territoryID, int new_territoryID, int numSoldie
 	this->playid = playID;
 	this->territoryid = territoryID;
 	this->new_territoryid = new_territoryID;
-	this-> numSoldiers = numSoldiers;
+    this-> numSoldiers = numSoldiers;
 }
 Advance::Advance(const Advance& o1) {
 	this->playid = o1.playid;
 	this->territoryid = o1.territoryid;
 	this->new_territoryid = o1.new_territoryid;
-	this->numSoldiers = o1.numSoldiers;
+    this->numSoldiers = o1.numSoldiers;
 }
 bool Advance::validate() {
 	return true;

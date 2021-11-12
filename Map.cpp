@@ -17,7 +17,6 @@ Territory::Territory()
     numArmy = 0;
     tName = "";
     cName = "";
-    territoryPlayer = "default player";
     isAdjacent = false;
 }
 Territory::Territory(int tID, int cID, string tName, string cName)
@@ -37,9 +36,6 @@ int Territory::getPID() { return pID; }
 int Territory::getNumArmy() { return numArmy; }
 string Territory::getTName() { return tName; }
 string Territory::getCName() { return cName; }
-string Territory::getTerritoryPlayer() {
-    return territoryPlayer;
-}
 bool Territory::getAdjContinent() { return isAdjacent; }
 vector<int> Territory::getAdjTerritoryOnMap() { return adjTerritoryOnMap; }
 vector<int> Territory::getAdjTerritoryInContinent() { return adjTerritoriesInContinent; }
@@ -56,12 +52,13 @@ void Territory::setTName(string tName)
 {
     tName = tName;
 }
-void Territory::setTerritoryPlayer(string p) {
-    territoryPlayer = p;
-}
 void Territory::setAdjContinent(bool canLeave)
 {
     isAdjacent = canLeave;
+}
+void Territory::setPlayerID(int pID)
+{
+    pID = pID;
 }
 
 void Territory::displayBorders()
@@ -105,7 +102,7 @@ bool Continent::isConnected()
         }
 
         int length1 = territoriesInContinent[i]->adjTerritoriesInContinent.size();    //Get adjacent territories list length
-        for (int j = 0; j < length1; j++) {                                                 //Loop adjacent territories
+        for (int j = 0; j < length1; j++) {                                                 //Loop adjacent territories      
             int temp = this->territoriesInContinent[i]->adjTerritoriesInContinent[j];   //Get adjacent territory ID
             int length2 = visited.size();                                             //Length of visited territories
             for (int k = 0; k < length2; k++) {                                             //Loop visited territories
@@ -169,27 +166,28 @@ void Map::displayContinents()
 //Map is valid if all continents are connected
 bool Map::validate()
 {
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     set<int> visitedContinents;         //Set of Visited Continents
     set<int>::const_iterator iterator;   //Iterator to iterate over map and modify territories
     vector<bool> visited(length);
 
     //Check if Continents are connected
     for (int i = 0; i < length; i++) {
-        if (this->continents[i]->isConnected()) {
-            cout << "Map Continent " << this->continents[i]->getCName() << " is connected." << endl;
+        if (worldMap.continents[i]->isConnected()) {
+            cout << "Map Continent " << worldMap.continents[i]->getCName() << " is connected." << endl;
         }
         else {
-            cout << "MAP IS INVALID - Map Continent " << this->continents[i]->getCName() << " is not connected." << endl;
+            cout << "MAP IS INVALID - Map Continent " << worldMap.continents[i]->getCName() << " is not connected." << endl;
             break;
         }
     }
 
     //dfs
+    /**
     dfs(0, visited,length);
     //Iterate through continents and add visited continents to visited vector
     for (int i = 0; i < length; i++) {
-        for (iterator = this->continents[i]->connectedContinents.begin(); iterator != this->continents[i]->connectedContinents.end(); ++iterator) {
+        for (iterator = worldMap.continents[i]->connectedContinents.begin(); iterator != this->continents[i]->connectedContinents.end(); ++iterator) {
             visitedContinents.insert(*iterator);
         }
     }
@@ -197,10 +195,11 @@ bool Map::validate()
     //After iteration, check if the # visited continents = # of total continents to validate map
     if (visitedContinents.size() != length) {
         if (visitedContinents.size() > length ) {
-            cout << "Continent Numbers:"  << this->continents.size()  << endl;
+            cout << "Continent Numbers:"  << worldMap.continents.size()  << endl;
             cout << "Map loaded successfully!" << endl;
         }
         else if (visitedContinents.size() < length) {
+
         }
         else {
             cout << "MAP IS INVALID - One or more continents is unreachable." << endl;
@@ -209,14 +208,16 @@ bool Map::validate()
     }
     if (!(belong_Onecontinent())) {
         cout << "One country has more than one contient." << endl;
+
     }
     else {
         cout << "Map is valid." << endl;
         return true;
-    }
+    } **/
+    return true;
 }
 int Map::getCountryIndex(int ID) {
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     int index = -1;
     for (int x = 0; x < length; x++) {
         Territory temp = *(this->territories.at(x));
@@ -230,9 +231,9 @@ int Map::getCountryIndex(int ID) {
 void Map::dfs(int i, vector <bool>& visited, int leng) {
     visited[i] = true;
     for (int x = 1; x < leng; x++) {
-
+        
         Territory temp = *(territories.at(x));
-
+        
         int tempID = temp.getCID();
         int index = 0;
         if ( (visited[index] != true)) {
@@ -250,7 +251,7 @@ bool Map::belong_Onecontinent() {
     for (int x = 0; x < length; x++) {
         Territory temp = *(territories.at(x));
         int tempID = temp.getBelongedContinentID();
-
+        
         belongTo = belongTo && continentMatched(tempID);
     }
     return belongTo;
@@ -262,7 +263,7 @@ bool Map::continentMatched(int continentID) {
     if (continentID < 0) {
         return matched;
     }
-
+    
     for (int x = 0; x < length; x++) {
         Continent temp = *(continents.at(x));
         int tempID = temp.getCID();
@@ -321,11 +322,10 @@ void MapLoader::readMap() {
                     break;
                 vector<string> tokens = parseString(text);
                 Continent* c = new Continent(tokens[0], ++cNum, stoi(tokens[1]));
-                worldMap.continents.push_back(c);
+                Map::worldMap.continents.push_back(c);
             }
-            //for(auto i : worldMap.continents){
+            //for (auto i : worldMap.continents)
             //    cout << *i << endl;
-            //}
         }
 
         if (text == "[countries]")
@@ -338,9 +338,9 @@ void MapLoader::readMap() {
                 vector<string> tokens = parseString(text);
                 int cID = stoi(tokens[2]);
                 Territory* t = new Territory(stoi(tokens[0]), cID, tokens[1], "");
-                worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
-                worldMap.territories.push_back(t);
-            }
+                Map::worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
+                Map::worldMap.territories.push_back(t);
+            };
         }
 
         if (text == "[borders]")
@@ -350,24 +350,25 @@ void MapLoader::readMap() {
                 if (text == "")
                     break;
                 vector<int> line = parseStringToInt(text);
-                //worldMap.adjTerritoriesInContinent.push_back(parseStringBorder(text));
+                //worldMap.adjTerritoriesInContinent.push_back(parseStringToInt(text));
                 for (auto i : line)
                 {
-                    worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
+                    Map::worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
 
-                    int currentContinent = worldMap.territories[adjRow]->getCID();
-                    if (worldMap.territories[i - 1]->getCID() == currentContinent)
-                        worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
+                    int currentContinent = Map::worldMap.territories[adjRow]->getCID();
+                    if (Map::worldMap.territories[i - 1]->getCID() == currentContinent)
+                        Map::worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
                 }
-//                cout << "Territory #" << adjRow + 1 << ": ";
-//                for (auto i : worldMap.territories[adjRow]->adjTerritoryOnMap) {
-//                    cout << i << ", ";
-//                }
-//                cout << "\nTerritories in Continent: ";
-//                for (auto i : worldMap.territories[adjRow]->adjTerritoriesInContinent) {
-//                    cout << i << ", ";
-//                }
-//                cout << "\n\n";
+                /**cout << "Territory #" << adjRow + 1 << ": ";
+                for (auto i : worldMap.territories[adjRow]->adjTerritoryOnMap) {
+                    cout << i << ", ";
+                }
+                cout << "\nTerritories in Continent: ";
+                for (auto i : worldMap.territories[adjRow]->adjTerritoriesInContinent) {
+                    cout << i << ", ";
+                }
+                cout << "\n\n";
+                **/
                 adjRow++;
             }
 
@@ -399,6 +400,8 @@ vector<int> parseStringToInt(const string& s) {
     }
     return tokens;
 }
+
+
 
 
 
