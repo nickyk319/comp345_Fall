@@ -5,6 +5,7 @@
 #include <random>
 
 using namespace std;
+Map Map::worldMap;
 
 GameEngine::GameEngine() {
 	state = GameState::start;
@@ -22,6 +23,8 @@ void GameEngine::startUpPhase(){
     validateMap();
     //add players
     addPlayer();
+    //initialize game
+    gameStart();
 
 }
 
@@ -34,15 +37,17 @@ void GameEngine::loadMap() {
     //load map to game engine
     maploaded->setMapFile(inputMapFile);
     maploaded->readMap();
-	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
+    cout << "************************************************************************************" << endl;
+	cout << "\nThe map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
 	setState(GameState::map_loaded);
 }
 
-//To see if the map is valid or invaild
+//To see if the map is valid or invalid
 void GameEngine::validateMap() {
 	// 1. use the Map.validate() function to validate map.
-	if (worldMap.validate()) {
-		cout << "The map you loaded is valid! Now you can go to next step -- add players!" << endl;
+	if (Map::worldMap.validate()) {
+        cout << "************************************************************************************" << endl;
+		cout << "\nThe map you loaded is valid! Now you can go to next step -- add players!" << endl;
 		setState(GameState::map_validated);
 	}
 	else {
@@ -53,19 +58,26 @@ void GameEngine::validateMap() {
 
 //help user add the player 
 void GameEngine::addPlayer() {
-	// 1. ask for user input for number of players
-	cout << "Enter the number of players you want to have (2-6): ";
-	cin >> numOfPlayers; // add input validation
-    vector<Territory*> territory;
-    vector<Card*> card;
-    vector<Order*> order;
+    do{
+        // 1. ask for user input for number of players
+        cout << "Enter the number of players you want to have (2-6): ";
+        cin >> numOfPlayers; // add input validation
+        vector<Territory*> territory;
+        vector<Card*> card;
+        vector<Order*> order;
+        if(numOfPlayers > MAX_NUM_PLAYER || numOfPlayers < MIN_NUM_PLAYER){
+            cout << "Invalid input, please enter again!" << endl;
+        }
+    }while(numOfPlayers>MAX_NUM_PLAYER || numOfPlayers < MIN_NUM_PLAYER);
+
     for(int i = 0; i < numOfPlayers; i++){
         cout << "Please enter the player name for player ID: " << i + 1 << " Player: " << endl;
         cin >> playerName;
         player_list.push_back(new Player(i, playerName));
     }
 	// 2. players added successfully, print message.
-	cout << "Valid number of players are created. Now you can go to next step -- assignCountries" << endl;
+    cout << "************************************************************************************" << endl;
+	cout << "Valid number of players are created. Now you can go to next step -- assignTerritories" << endl;
 	setState(GameState::players_added);
 }
 
@@ -80,10 +92,10 @@ void GameEngine::gameStart(){
     //assign territory to players in round-robin fashion
     cout << "\n The territories are assigned in the following order: " << endl;
 
-    for (int i = 0; i < worldMap.territories.size(); i++) {
-        worldMap.territories[i]->setPlayerID((player_list.at(i % numOfPlayers))->getPID());
+    for (int i = 0; i < Map::worldMap.territories.size(); i++) {
+        Map::worldMap.territories[i]->setPlayerID((player_list.at(i % numOfPlayers))->getPID());
         string territoryPlayer = player_list.at(i % numOfPlayers)->getName();
-        string territoryName = worldMap.territories[i]->getTName();
+        string territoryName = Map::worldMap.territories[i]->getTName();
 
         cout << setw(12) << "Territory: " << territoryName << ", owned by " <<  territoryPlayer << endl;
     }
@@ -92,6 +104,7 @@ void GameEngine::gameStart(){
         (player_list.at(k))->setReinforcementPool(50);
     }
 
+    //determine the order of play randomly
     shufflePlayerList();
 
     //initialize a card deck
@@ -133,9 +146,9 @@ void GameEngine::reinforcementPhase() {
             numTerritoriesPerContinent[j->getCID()]+=1;						//Increment count at position CID
 
         int index = 1;
-        for(auto j : worldMap.continents) {									//Compare map continent size with player count
+        for(auto j : Map::worldMap.continents) {									//Compare map continent size with player count
             if (j->territoriesInContinent.size() == numTerritoriesPerContinent[index++]) {
-                i->reinforcements += worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
+                i->reinforcements += Map::worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
             }
             continue;
         }

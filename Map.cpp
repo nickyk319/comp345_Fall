@@ -199,7 +199,7 @@ bool Map::validate()
             cout << "Map loaded successfully!" << endl;
         }
         else if (visitedContinents.size() < length) {
-            
+
         }
         else {
             cout << "MAP IS INVALID - One or more continents is unreachable." << endl;
@@ -208,7 +208,7 @@ bool Map::validate()
     }
     if (!(belong_Onecontinent())) {
         cout << "One country has more than one contient." << endl;
-    
+
     }
     else {
         cout << "Map is valid." << endl;
@@ -217,7 +217,7 @@ bool Map::validate()
     return true;
 }
 int Map::getCountryIndex(int ID) {
-    int length = this->continents.size();
+    int length = worldMap.continents.size();
     int index = -1;
     for (int x = 0; x < length; x++) {
         Territory temp = *(this->territories.at(x));
@@ -301,7 +301,7 @@ void MapLoader::readMap() {
     smatch mr;
 
     cout << getMapFile() << endl;
-    ifstream file(getMapFile());
+    ifstream file("/Users/nicky/CLionProjects/comp345_Fall/" + getMapFile());
     getline(file, text);
 
     if (regex_search(text, mr, rx)) {
@@ -322,7 +322,7 @@ void MapLoader::readMap() {
                     break;
                 vector<string> tokens = parseString(text);
                 Continent* c = new Continent(tokens[0], ++cNum, stoi(tokens[1]));
-                worldMap.continents.push_back(c);
+                Map::worldMap.continents.push_back(c);
             }
             //for (auto i : worldMap.continents)
             //    cout << *i << endl;
@@ -338,8 +338,8 @@ void MapLoader::readMap() {
                 vector<string> tokens = parseString(text);
                 int cID = stoi(tokens[2]);
                 Territory* t = new Territory(stoi(tokens[0]), cID, tokens[1], "");
-                worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
-                worldMap.territories.push_back(t);
+                Map::worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
+                Map::worldMap.territories.push_back(t);
             };
         }
 
@@ -353,11 +353,11 @@ void MapLoader::readMap() {
                 //worldMap.adjTerritoriesInContinent.push_back(parseStringToInt(text));
                 for (auto i : line)
                 {
-                    worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
+                    Map::worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
 
-                    int currentContinent = worldMap.territories[adjRow]->getCID();
-                    if (worldMap.territories[i - 1]->getCID() == currentContinent)
-                        worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
+                    int currentContinent = Map::worldMap.territories[adjRow]->getCID();
+                    if (Map::worldMap.territories[i - 1]->getCID() == currentContinent)
+                        Map::worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
                 }
                 /**cout << "Territory #" << adjRow + 1 << ": ";
                 for (auto i : worldMap.territories[adjRow]->adjTerritoryOnMap) {

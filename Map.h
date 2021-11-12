@@ -97,12 +97,14 @@ public:
     bool oneContinent();
     bool belong_Onecontinent();
     bool continentMatched(int continentID);
+
+    static Map worldMap;
 };
 
 class MapLoader {
+
 public:
     string mFile;
-
     MapLoader();
     string getMapFile();
     void setMapFile(const string& mf);
@@ -117,4 +119,4 @@ vector<int> parseStringToInt(const string& s);
 
 
 //Global Variables
-static Map worldMap;
+//static Map worldMap;
