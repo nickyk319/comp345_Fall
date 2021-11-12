@@ -1,6 +1,4 @@
 #include "GameEngine.h"
-#include "Map.h"
-#include "Player.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>
@@ -13,6 +11,7 @@ GameEngine::GameEngine() {
 	ol = new OrdersList();
 	deck = new Deck();
     hand = new Hand();
+    maploaded = new MapLoader();
 	numOfPlayers = 0;
 }
 
@@ -33,8 +32,8 @@ void GameEngine::loadMap() {
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
     cin >> inputMapFile;
     //load map to game engine
-    maploaded->setMapFile(inputMapFile);
-    maploaded->readMap();
+    maploaded->worldMap.setMapFile(inputMapFile);
+    maploaded->maploaded->worldMap.readMap();
 	cout << "The map has been successfully loaded! Now you can go to next step -- validateMap! " << endl;
 	setState(GameState::map_loaded);
 }
@@ -42,7 +41,7 @@ void GameEngine::loadMap() {
 //To see if the map is valid or invaild
 void GameEngine::validateMap() {
 	// 1. use the Map.validate() function to validate map.
-	if (worldMap.validate()) {
+	if (maploaded->worldMap.validate()) {
 		cout << "The map you loaded is valid! Now you can go to next step -- add players!" << endl;
 		setState(GameState::map_validated);
 	}

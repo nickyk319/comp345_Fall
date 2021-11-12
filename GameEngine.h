@@ -15,7 +15,8 @@ class GameEngine {
 
 private:
 	GameState state;
-    MapLoader *maploaded;
+    MapLoader* maploaded;
+    Map* map;
 	OrdersList* ol;
 	Deck* deck;
     Hand *hand;

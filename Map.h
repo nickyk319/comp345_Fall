@@ -1,6 +1,4 @@
-#ifndef _MAP_H
-#define _MAP_H
-
+#pragma once
 #include <vector>
 #include <set>
 #include <string>
@@ -107,7 +105,6 @@ public:
     string mFile;
 
     MapLoader();
-
     string getMapFile();
     void setMapFile(const string& mf);
     vector<string> parseString(const string& s);
@@ -118,7 +115,7 @@ public:
 ostream& operator << (ostream& out, const Continent& c);
 ostream& operator << (ostream& out, const Territory& t);
 vector<int> parseStringToInt(const string& s);
-#endif
+
 
 //Global Variables
 static Map worldMap;
