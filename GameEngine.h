@@ -23,6 +23,8 @@ private:
     const int MAX_NUM_PLAYER = 6;
     string playerName;
     string inputMapFile;
+	string defendNum;
+	string attackNum;
     
     vector<Territory *> territory_list;
 

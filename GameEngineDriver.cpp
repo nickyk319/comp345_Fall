@@ -1,7 +1,7 @@
 #include <iostream>
 #include "GameEngine.h"
 
-
+//Map Map::worldMap;
 
 int main() {
 	GameEngine* ge = new GameEngine();
@@ -9,8 +9,15 @@ int main() {
 	if (ge->getState() == GameState::map_loaded) {
 		ge->validateMap();
 		ge->addPlayer();
+
+		// task1: initialize armies to each player
 		ge->gameStart();
 		ge->reinforcementPhase();
+
+		// task2: only issue deploy orders if armies remains & task3: place advance orders to attack or to defend
+		ge->issueOrdersPhase();
+
+
 	}
 
 	

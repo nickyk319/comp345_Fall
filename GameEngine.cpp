@@ -6,8 +6,11 @@
 #include <iomanip>
 #include <random>
 #include <fstream>
+#include <sstream>
+#include <string>
 
 using namespace std;
+Map Map::worldMap;
 
 GameEngine::GameEngine() {
 	state = GameState::start;
@@ -49,14 +52,14 @@ void GameEngine::loadMap() {
         
     }
     map.readMap(inputMapFile);
-    worldMap.displayContinents();
+    Map::worldMap.displayContinents();
 	
 }
 
 //To see if the map is valid or invaild
 void GameEngine::validateMap() {
 	// 1. use the Map.validate() function to validate map.
-	if (worldMap.validate()) {
+	if (Map::worldMap.validate()) {
 		cout << "The map you loaded is valid! Now you can go to next step -- add players!" << endl;
 		setState(GameState::map_validated);
 	}
@@ -102,10 +105,10 @@ void GameEngine::gameStart(){
     //assign territory to players in round-robin fashion
     cout << "\n The territories are assigned in the following order: " << endl;
 
-    for (int i = 0; i < worldMap.territories.size(); i++) {
-        worldMap.territories[i]->setTerritoryPlayer((player_list.at(i % numOfPlayers))->getName());
-        string territoryPlayer = worldMap.territories[i]->getTerritoryPlayer();
-        string territoryName = worldMap.territories[i]->getTName();
+    for (int i = 0; i < Map::worldMap.territories.size(); i++) {
+        Map::worldMap.territories[i]->setTerritoryPlayer((player_list.at(i % numOfPlayers))->getName());
+        string territoryPlayer = Map::worldMap.territories[i]->getTerritoryPlayer();
+        string territoryName = Map::worldMap.territories[i]->getTName();
 
         cout << setw(12) << "Territory: " << territoryName << ", owned by " <<  territoryPlayer << endl;
     }
@@ -162,10 +165,10 @@ void GameEngine::reinforcementPhase() {
             numTerritoriesPerContinent[j->getCID()]+=1;						//Increment count at position CID
 
         int index = 1;
-        for(auto j : worldMap.continents) {									//Compare map continent size with player count
-            if (j->territoriesInContinent.size() == numTerritoriesPerContinent[index++]) {
-                i->reinforcements += worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
-            }
+        for(auto j : Map::worldMap.continents) {									//Compare map continent size with player count
+            //if (j->territoriesInContinent.size() == numTerritoriesPerContinent[index++]) {
+           //     i->reinforcements += Map::worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
+           // }
             continue;
         }
 
@@ -177,9 +180,45 @@ void GameEngine::reinforcementPhase() {
 //Please uncomment this method when you finished
 void GameEngine::issueOrdersPhase() {
     for(auto i : player_list) {
-        i->issueOrder();
+        if (i->getReinforcementPool() > 0) {
+            cout << "You can place deploy orders now. " << endl;
+            i->issueOrder();
+            cout << "You have " << i->getReinforcementPool()<< " armies now. " << endl;
+
+            
+
+            cout << "Which country do you want to defend?" << endl;
+            cin >> defendNum;
+
+
+            std::string input1 = defendNum;
+            std::stringstream ss( defendNum);
+
+            std::string word1;
+            while (ss >> word1) {
+                i->todefend(word1);
+
+            }
+
+            cout << "Which country do you want to defend?" << endl;
+            cin >> attackNum;
+
+
+            std::string input = attackNum;
+            std::stringstream bb(attackNum);
+
+            std::string word;
+            while (bb >> word) {
+                i->toAttack(word);
+
+            }
+        }
+        else {
+            cout << "You will enter the next step!!" << endl;
+        }
     }
 }
+
 
 void GameEngine::executeOrdersPhase() {
     for(auto i : player_list) {

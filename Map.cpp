@@ -186,7 +186,7 @@ bool Map::validate()
     }
 
     //dfs
-    dfs(0, visited,length);
+    //dfs(0, visited,length);
     //Iterate through continents and add visited continents to visited vector
     for (int i = 0; i < length; i++) {
         for (iterator = this->continents[i]->connectedContinents.begin(); iterator != this->continents[i]->connectedContinents.end(); ++iterator) {
@@ -231,9 +231,9 @@ void Map::dfs(int i, vector <bool>& visited, int leng) {
     //visited[i] = true;
     for (int x = 1; x < leng; x++) {
 
-        Territory temp = *(territories.at(x));
+        //Territory temp = *(territories.at(x));
 
-        int tempID = temp.getCID();
+        //int tempID = temp.getCID();
         int index = 0;
         if ( (visited[index] != true)) {
 
@@ -321,7 +321,7 @@ void MapLoader::readMap(string mapname) {
                     break;
                 vector<string> tokens = parseString(text);
                 Continent* c = new Continent(tokens[0], ++cNum, stoi(tokens[1]));
-                worldMap.continents.push_back(c);
+                Map::worldMap.continents.push_back(c);
             }
             //for(auto i : worldMap.continents){
             //    cout << *i << endl;
@@ -338,8 +338,8 @@ void MapLoader::readMap(string mapname) {
                 vector<string> tokens = parseString(text);
                 int cID = stoi(tokens[2]);
                 Territory* t = new Territory(stoi(tokens[0]), cID, tokens[1], "");
-                worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
-                worldMap.territories.push_back(t);
+                Map::worldMap.continents[cID-1]->territoriesInContinent.push_back(t);
+                Map::worldMap.territories.push_back(t);
             }
         }
 
@@ -353,11 +353,11 @@ void MapLoader::readMap(string mapname) {
                 //worldMap.adjTerritoriesInContinent.push_back(parseStringBorder(text));
                 for (auto i : line)
                 {
-                    worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
+                    Map::worldMap.territories[adjRow]->adjTerritoryOnMap.push_back(i);
 
-                    int currentContinent = worldMap.territories[adjRow]->getCID();
-                    if (worldMap.territories[i - 1]->getCID() == currentContinent)
-                        worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
+                    int currentContinent = Map::worldMap.territories[adjRow]->getCID();
+                    if (Map::worldMap.territories[i - 1]->getCID() == currentContinent)
+                        Map::worldMap.territories[adjRow]->adjTerritoriesInContinent.push_back(i);
                 }
 //                cout << "Territory #" << adjRow + 1 << ": ";
 //                for (auto i : worldMap.territories[adjRow]->adjTerritoryOnMap) {

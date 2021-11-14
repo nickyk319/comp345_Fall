@@ -9,6 +9,7 @@ using namespace std;
 
 class Territory {
 public:
+
     int tID;    //Territory ID
     int cID;    //Continent ID
     int pID;    //Player ID
@@ -70,6 +71,7 @@ public:
 
 class Map {
 public:
+    static Map worldMap;
     string mName;   //Map Name
     int numContinent;   //# of all Continents
     int numTerritory;   //# of all Territories
@@ -120,5 +122,5 @@ ostream& operator << (ostream& out, const Continent& c);
 ostream& operator << (ostream& out, const Territory& t);
 vector<int> parseStringToInt(const string& s);
 
-static Map worldMap;
+
 #endif
