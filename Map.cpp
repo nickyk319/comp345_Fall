@@ -301,7 +301,7 @@ void MapLoader::readMap() {
     smatch mr;
 
     cout << getMapFile() << endl;
-    ifstream file("/Users/nicky/CLionProjects/comp345_Fall/" + getMapFile());
+    ifstream file(getMapFile());
     getline(file, text);
 
     if (regex_search(text, mr, rx)) {
@@ -386,7 +386,7 @@ ostream& operator << (ostream& out, const Continent& c) {
 }
 
 ostream& operator << (ostream& out, const Territory& t) {
-    out << t.tName << " -> #" << t.tID << ", Continent: " << t.cID;
+    out << t.tName << " -> #" << t.tID << ", Continent: " << t.cID << ", # Armies: " << t.numArmy << endl;
     return out;
 }
 

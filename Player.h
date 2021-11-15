@@ -65,7 +65,7 @@ public:
 
     std::list<int>toAttack(const string& s);
 
-    std::list<Order> issueOrder(string order);
+    std::list<Order> issueOrder();
 
 	void printOrder(list<Order>& L);
 

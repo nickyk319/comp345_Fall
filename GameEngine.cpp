@@ -25,7 +25,6 @@ void GameEngine::startUpPhase(){
     addPlayer();
     //initialize game
     gameStart();
-
 }
 
 
@@ -94,6 +93,7 @@ void GameEngine::gameStart(){
 
     for (int i = 0; i < Map::worldMap.territories.size(); i++) {
         Map::worldMap.territories[i]->setPlayerID((player_list.at(i % numOfPlayers))->getPID());
+        player_list.at(i % numOfPlayers)->territories.push_back(Map::worldMap.territories[i]);
         string territoryPlayer = player_list.at(i % numOfPlayers)->getName();
         string territoryName = Map::worldMap.territories[i]->getTName();
 
@@ -131,9 +131,9 @@ void GameEngine::assignCountries() {
 //
 void GameEngine::mainGameLoop() {
     //Find order setup from gamestart()
- GameEngine::reinforcementPhase;
-    GameEngine::issueOrdersPhase;
-    GameEngine::executeOrdersPhase;
+    reinforcementPhase();
+    issueOrdersPhase();
+    executeOrdersPhase();
 }
 
 void GameEngine::reinforcementPhase() {
@@ -161,11 +161,11 @@ void GameEngine::reinforcementPhase() {
 }
 
 //Please uncomment this method when you finished
-//void GameEngine::issueOrdersPhase() {
-//    for(auto i : player_list) {
-//        i->issueOrder();
-//    }
-//}
+void GameEngine::issueOrdersPhase() {
+    for(auto i : player_list) {
+        i->issueOrder();
+    }
+}
 
 void GameEngine::executeOrdersPhase() {
     for(auto i : player_list) {

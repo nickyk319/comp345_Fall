@@ -57,7 +57,6 @@ public:
 	Bomb(const Bomb& o1);
 	bool validate() override;
 	void execute() override;
-
 };
 
 class Blockade : public Order {
@@ -119,3 +118,12 @@ public:
 	// move 
 	void move(Order* order, int index);
 };
+
+/**
+ostream& Deploy::operator << (ostream& out, const Deploy& t);
+ostream& Advance::operator << (ostream& out, const Advance& t);
+ostream& Bomb::operator << (ostream& out, const Bomb& t);
+ostream& Blockade::operator << (ostream& out, const Blockade& t);
+ostream& Airlift::operator << (ostream& out, const Airlift& t);
+ostream& Negotiate::operator << (ostream& out, const Negotiate& t);
+**/

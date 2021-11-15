@@ -1,6 +1,6 @@
 // worte by HAO MEI 40074373
 #include "Order.h"
-
+#include <iostream>
 
 Order::Order() {}
 
@@ -178,3 +178,31 @@ void OrdersList::move(Order* order, int index) {
 	std::remove(olist->begin(), olist->end(), order);
 	olist->insert(olist->begin() + index, order);
 }
+
+/**
+ostream& Deploy::operator << (ostream& out, const Deploy& t) {
+	out << "\nOrder Type: Deploy\nPlayer: " << t.playid << "\nTerritory: " << t.territoryid << "\n# Armies: " << t.num << endl;
+	return out;
+}
+ostream& Advance::operator << (ostream& out, const Advance& t) {
+	out << "\nOrder Type: Advance\nPlayer: " << t.playid << "\nTerritory: " << t.territoryid << "\nNew Territory: " << t.new_territoryid << "\n# Armies: " << t.numSoldiers << endl;
+	return out;
+}
+ostream& Bomb::operator << (ostream& out, const Bomb& t) {
+	out << "\nOrder Type: Bomb\nTerritory being bombed: "<< t.oppTerritory << endl;
+	return out;
+}
+
+ostream& Blockade::operator << (ostream& out, const Blockade& t) {
+	out << "\nOrder Type: Blockade\nTerritory: "<< t.territoryid << endl;
+	return out;
+}
+ostream& Airlift::operator << (ostream& out, const Airlift& t) {
+	out << "\nOrder Type: Airlift\nPlayer: " << t.playid << "\nTerritory: " << t.territoryid << "\nNew Territory: " << t.new_territoryid << "\n# Armies: " << t.num << endl;
+	return out;
+}
+ostream& Negotiate::operator << (ostream& out, const Negotiate& t) {
+	out << "\nOrder Type: Airlift\nPlayer: " << t.play1id << "\n Player: " << t.play2id << endl;
+	return out;
+}
+**/
