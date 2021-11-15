@@ -16,7 +16,7 @@ int main() {
 
 		// task2: only issue deploy orders if armies remains & task3: place advance orders to attack or to defend
 		ge->issueOrdersPhase();
-
+		ge->executeOrdersPhase();
 
 	}
 

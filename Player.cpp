@@ -133,7 +133,7 @@ std::list<int> Player::toAttack(const string& s) {
     return toAttacklist;
 }
 
-bool Player::remove() {
+bool Player::lose() {
     if (territories.size() == 0) {
         cout << "player: " << pID << " elimated" << endl;
 

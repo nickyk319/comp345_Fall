@@ -64,7 +64,7 @@ public:
 
     std::list<int>toAttack(const string& s);
 
-    bool remove();
+    bool lose();
 
     bool win();
 

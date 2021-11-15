@@ -183,15 +183,15 @@ void GameEngine::reinforcementPhase() {
 void GameEngine::issueOrdersPhase() {
     for(auto i : player_list) {
         if (i->getReinforcementPool() > 0) {
-            cout << "You can place deploy orders now. " << endl;
+            cout << "\nYou can place deploy orders now. " << endl;
             i->issueOrder();
 
             cout << "\n\n------------------issueorder complete!-------------------\n\n";
             cout << "You have " << i->getReinforcementPool()<< " armies now. " << endl;
 
             
-
-            cout << "Which country do you want to defend?" << endl;
+            cout << "\n\n------------------test issueorder-------------------\n\n";
+            cout << "\nWhich country do you want to defend?" << endl;
             cin >> defendNum;
 
 
@@ -204,7 +204,7 @@ void GameEngine::issueOrdersPhase() {
 
             }
 
-            cout << "Which country do you want to defend?" << endl;
+            cout << "\nWhich country do you want to attack?" << endl;
             cin >> attackNum;
 
 
@@ -216,6 +216,7 @@ void GameEngine::issueOrdersPhase() {
                 i->toAttack(word);
 
             }
+            cout << "\n\n------------------test issueorder complete-------------------\n\n";
         }
         else {
             cout << "You will enter the next step!!" << endl;
@@ -225,9 +226,20 @@ void GameEngine::issueOrdersPhase() {
 
 
 void GameEngine::executeOrdersPhase() {
+    cout << "\n\n------------------execute order-------------------\n\n";
     for(auto i : player_list) {
-
+        for (auto j : i->OrderList) {
+            cout<<j.validate();
+             j.execute();
+        }
+        if (i->lose() == true) {
+            player_list.erase(player_list.begin());
+        }
+        if (i->win() == true) {
+            break;
+        }
     }
+    cout << "\n\n------------------execute order complete-------------------\n\n";
 }
 
 
