@@ -224,22 +224,22 @@ void Hand::play(OrdersList* olist, Card *card, Deck* deck){
     handCards_to_play.push_back(card);
 
     //add card corresponding order to order list
-    if(card->cardTypeToString(card->getType()) == "bomb"){
-        olist->add(new Bomb(2));
-        cout << "Bomb add to the order list" << endl;
-    }else if(card->cardTypeToString(card->getType()) == "reinforcement"){
-        olist->add(new Deploy(2,2,3));
-        cout << "reinforcement add to the order list" << endl;
-    }else if(card->cardTypeToString(card->getType()) == "blockade"){
-        olist->add(new Blockade(2));
-        cout << "blockade add to the order list" << endl;
-    }else if(card->cardTypeToString(card->getType()) == "airlift"){
-        olist->add(new Airlift(2,2,3,4));
-        cout << "airlift add to the order list" << endl;
-    }else if(card->cardTypeToString(card->getType()) == "diplomacy"){
-        olist->add(new Negotiate(2, 3));
-        cout << "diplomacy add to the order list" << endl;
-    }
+//    if(card->cardTypeToString(card->getType()) == "bomb"){
+//        olist->add(new Bomb(2));
+//        cout << "Bomb add to the order list" << endl;
+//    }else if(card->cardTypeToString(card->getType()) == "reinforcement"){
+//        olist->add(new Deploy(2,2,3));
+//        cout << "reinforcement add to the order list" << endl;
+//    }else if(card->cardTypeToString(card->getType()) == "blockade"){
+//        olist->add(new Blockade(2));
+//        cout << "blockade add to the order list" << endl;
+//    }else if(card->cardTypeToString(card->getType()) == "airlift"){
+//        olist->add(new Airlift(2,2,3,4));
+//        cout << "airlift add to the order list" << endl;
+//    }else if(card->cardTypeToString(card->getType()) == "diplomacy"){
+//        olist->add(new Negotiate(2, 3));
+//        cout << "diplomacy add to the order list" << endl;
+//    }
 
     //remove card from hand
     remove_played_handCards(card);

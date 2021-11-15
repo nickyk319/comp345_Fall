@@ -12,6 +12,7 @@ class Player {
 
 public:
     vector <Territory*> territories;
+    vector <Player*> friends;
 
     int ahandofCards;
 
@@ -46,7 +47,6 @@ public:
     ~Player(); //Destructor
 
     string getName();
-    int getPID();
     int getReinforcementPool();
     void setReinforcementPool(int);
 	void printList(const list<int>& L);
@@ -54,7 +54,7 @@ public:
     void printAdjacentTerritories();
 
     void printTerritories();
-
+    int getPID();
     int getsize();
 
     void showPlayer();
@@ -65,8 +65,24 @@ public:
 
     std::list<int>toAttack(const string& s);
 
-    std::list<Order> issueOrder();
+    bool remove();
+
+    bool win();
+
+    void issueOrder();
 
 	void printOrder(list<Order>& L);
+
+    Territory* getTerritoryByID(int id);
+
+    bool ownTerritory(Territory* terr);
+
+    bool ownTerritoryByFriend(Territory* terr);
+
+    void addFriends(Player*);
+
+    void setNeutral(Territory* terr);
+
+    Player* getPlayerByID(int id);
 
 };
