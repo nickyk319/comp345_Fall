@@ -39,6 +39,8 @@ void GameEngine::loadMap() {
     cin >> inputMapFile;
     //load map to game engine
     MapLoader map;
+    //testmap
+    inputMapFile = "europe.map";
     map.setMapFile(inputMapFile);
     ifstream fin(inputMapFile);
     if (!fin) {
@@ -183,6 +185,8 @@ void GameEngine::issueOrdersPhase() {
         if (i->getReinforcementPool() > 0) {
             cout << "You can place deploy orders now. " << endl;
             i->issueOrder();
+
+            cout << "\n\n------------------issueorder complete!-------------------\n\n";
             cout << "You have " << i->getReinforcementPool()<< " armies now. " << endl;
 
             

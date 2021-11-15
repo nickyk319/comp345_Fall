@@ -69,7 +69,7 @@ void Territory::displayBorders()
     cout << "\nAdjacent to " << getTName() << " -> " << endl;
     for (auto i : adjTerritoryOnMap)
     {
-        cout << adjTerritoryOnMap[i] << " ";
+        cout << Map::worldMap.territories[i]->getTName() << " id: "<< Map::worldMap.territories[i]->getTID()<<"\n";
     }
 }
 

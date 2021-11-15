@@ -105,22 +105,30 @@ void Player::showPlayer() {
 }
 
 void Player::showCards() {
-    for (auto i : cards)
-        cout << i << endl;
+    int x = 0;
+    for (auto i : handCard){
+        cout << i->cardTypeToString(i->getType()) << " id:" << x << endl;
+    x++;
+}
 }
 
 std::list<int> Player::todefend(const string& s) {
     vector<int> defends = parseStringToInt(s);
-    for (auto i : defends)
+    for (auto i : defends) {
         todefendlist.push_back(i);
-
+        cout << "\nYou selected: " << Map::worldMap.territories[i - 1]->getTName();
+    }
     return todefendlist;
 }
 
 std::list<int> Player::toAttack(const string& s) {
     vector<int> attacks = parseStringToInt(s);
-    for (auto i : attacks)
-        toAttacklist.push_back(i);
+    for (auto i : attacks){
+        
+            cout << "\nYou selected: " << Map::worldMap.territories[i-1]->getTName();
+        
+    toAttacklist.push_back(i);
+}
 
     return toAttacklist;
 }
@@ -139,46 +147,46 @@ bool Player::win() {
         }
 }
 void Player::issueOrder() {
-    cout << "ISSUE ORDER: \n" << endl;
-    cout << "Enter Order of Territories to Attack" ;
+    cout << "\nISSUE ORDER: \n" << endl;
+    cout << "Enter Order of Territories to Attack\n" ;
     printAdjacentTerritories();
     string attackInput;
     cin >> attackInput;
     toAttack(attackInput);
-    cout << "\nYou selected: " << attackInput;
+   
 
-    cout << "\n\nEnter Order of Territories to Defend" ;
+    cout << "\n\nEnter Order of Territories to Defend\n" ;
     printTerritories();
     string defendInput;
     cin >> defendInput;
     todefend(defendInput);
-    cout << "\nYou selected: " << defendInput;
+    
 
     //Deploy
-    cout << "DEPLOY ORDER: \n" << endl;
-    while (reinforcements >= 0) {
+    cout << "\nDEPLOY ORDER: \n" << endl;
+    while (reinforcements > 0) {
         cout << "Reinforcements: " << reinforcements;
-        cout << "\nSelect a Territory to Deploy to";
+        cout << "\nSelect a Territory to Deploy to\n";
         printTerritories();
         int tID;
         cin >> tID;
 
-        cout << "\nHow many reinformcements would you like to deploy?";
-        cout << "\n" << Map::worldMap.territories[tID-1];
+        cout << "\nHow many reinformcements would you like to deploy to: "<< Map::worldMap.territories[tID-1]->getTName()<<"?";
+      
         int numDeploy;
         cin >> numDeploy;
 
         reinforcements-=numDeploy;
         Deploy* d = new Deploy(pID, tID, numDeploy);
         cout << "\nAdded " << numDeploy << " Reinforcements!";
-        cout << "\n" << Map::worldMap.territories[tID-1];
+       cout << "\n" << Map::worldMap.territories[tID-1]->getTName();
         OrderList.push_back(*d);
     }
 
     //Advance
-    cout << "ADVANCE ORDER: \n" << endl;
+    cout << "\nADVANCE ORDER: \n" << endl;
     for (auto i : todefendlist) {
-        cout << "Defending " << Map::worldMap.territories[i-1];
+        cout << "Defending " << Map::worldMap.territories[i-1]->getTName();
         cout << "\nWhich Territory are you advancing to?\n";
         Map::worldMap.territories[i-1]->displayBorders();
         int tID;
@@ -197,7 +205,7 @@ void Player::issueOrder() {
         }
     }
     for (auto i : toAttacklist) {
-        cout << "Attacking with " << Map::worldMap.territories[i-1];
+        cout << "Attacking with " << Map::worldMap.territories[i-1]->getTName();
         cout << "\nWhich Territory are you attacking?\n";
         Map::worldMap.territories[i-1]->displayBorders();
         int tID;
@@ -214,33 +222,45 @@ void Player::issueOrder() {
     }
 
     //Cards
-    cout << "\nChoose a card\n";
-    showCards();
-    int cardIndex;
-    cin >> cardIndex;
-    switch(cards[cardIndex]->getType()) {
+    bool flag = false;
+    while (!flag) {
+        cout << "\nChoose a card\n";
+        showCards();
+        int cardIndex;
+        cin >> cardIndex;
+        switch (handCard[cardIndex]->getType()) {
         case bomb: {
+            cout << "\nbomb";
             cout << "\nSelect a target";
             int tID;
             cin >> tID;
-            Bomb* b = new Bomb(Map::worldMap.territories[tID-1]->getTID());
+            Bomb* b = new Bomb(Map::worldMap.territories[tID - 1]->getTID());
             OrderList.push_back(*b);
+            flag = true;
+            break;
         }
         case reinforcement: {
+            cout << "\nreinforcement";
             cout << "\nSelect a destination";
             int tID;
             cin >> tID;
-            Deploy* d = new Deploy(pID, Map::worldMap.territories[tID-1]->getTID(), 5);
+            Deploy* d = new Deploy(pID, Map::worldMap.territories[tID - 1]->getTID(), 5);
             OrderList.push_back(*d);
+            flag = true;
+            break;
         }
         case blockade: {
+            cout << "\nblockade";
             cout << "\nSelect a target";
             int tID;
             cin >> tID;
-            Blockade* b = new Blockade(Map::worldMap.territories[tID-1]->getTID());
+            Blockade* b = new Blockade(Map::worldMap.territories[tID - 1]->getTID());
             OrderList.push_back(*b);
+            flag = true;
+            break;
         }
         case airlift: {
+            cout << "\nairlift";
             cout << "\nSelect a destination";
             int tID;
             cin >> tID;
@@ -250,15 +270,25 @@ void Player::issueOrder() {
             cout << "\nWhere are they being taken from?";
             int tID2;
             cin >> tID2;
-            Airlift* a = new Airlift(pID, Map::worldMap.territories[tID2-1]->getTID(), Map::worldMap.territories[tID-1]->getTID(), num);
+            Airlift* a = new Airlift(pID, Map::worldMap.territories[tID2 - 1]->getTID(), Map::worldMap.territories[tID - 1]->getTID(), num);
             OrderList.push_back(*a);
+            flag = true;
+            break;
         }
         case diplomacy: {
+            cout << "\ndiplomacy";
             cout << "\nSelect a Player";
             int pID2;
             cin >> pID2;
             Negotiate* n = new Negotiate(pID, pID2);
             OrderList.push_back(*n);
+            flag = true;
+            break;
+        }
+        default: {
+            cout << "invild input, try again!\n\n" << endl;
+
+        }
         }
     }
 }
@@ -274,23 +304,27 @@ void Player::issueOrder() {
 //}
 
 void Player::printAdjacentTerritories() {
-    cout << "Player " << pID << "'s Attackable Territories: ";
-    vector <int> adjTerritories;
-
-    for (auto i : territories) {
-        for (auto j : i->adjTerritoryOnMap) {
-            adjTerritories.push_back(j);
+    cout << "Player " << playerName << "'s Attackable Territories: \n";
+    for (int i = 0; i < Map::worldMap.territories.size(); i++) {
+        string territoryPlayer = Map::worldMap.territories[i]->getTerritoryPlayer();
+        string territoryName = Map::worldMap.territories[i]->getTName();
+        int id =Map::worldMap.territories[i]->tID;
+        if (!territoryPlayer._Equal(playerName)) {
+            cout << "Territory: " << territoryName << ", owned by " << territoryPlayer << " id: "<<id<<endl;
         }
     }
-    for (auto i : adjTerritories)
-        cout << i << " ";
 }
 
 void Player::printTerritories() {
-    cout << "Player " << pID << "'s Defendable Territories: ";
+    cout << "Player " << playerName << "'s Defendable Territories: \n";
 
-    for (auto i: territories)
-        cout << i->getTID() << " ";
+    for (int i = 0; i < Map::worldMap.territories.size(); i++) {
+        string territoryPlayer = Map::worldMap.territories[i]->getTerritoryPlayer();
+        string territoryName = Map::worldMap.territories[i]->getTName();
+        int id = Map::worldMap.territories[i]->tID;
+        if(territoryPlayer._Equal(playerName)){
+        cout << "Territory: " << territoryName << ", owned by " << territoryPlayer << " id: " << id << endl;}
+    }
 }
 
 
