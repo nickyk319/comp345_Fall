@@ -5,8 +5,11 @@
 #include "Order.h"
 #include "Map.h"
 #include "Cards.h"
+#include "PlayerStrategies.h"
 //runable version master
 using namespace std;
+
+class PlayerStrategy;
 
 class Player {
 
@@ -32,6 +35,8 @@ public:
 
     list<Order>OrderList;
 
+    PlayerStrategy* playerStrategy;
+
     //friend classes
     friend class Card;
     friend class GameEngine;
@@ -49,6 +54,7 @@ public:
     string getName();
     int getReinforcementPool();
     void setReinforcementPool(int);
+    void setPlayerStrategy(PlayerStrategy* strategy);
 	void printList(const list<int>& L);
 
     void printAdjacentTerritories();
