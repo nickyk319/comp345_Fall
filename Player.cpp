@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "Order.h"
 using namespace std;
-
+//runable version master
 Player::Player()
 {
     playerName = "default";
@@ -146,6 +146,13 @@ bool Player::remove() {
         return true;
     }
 }
+bool Player::lose() {
+    if (territories.size() == 0) {
+        cout << "player: " << pID << " elimated" << endl;
+
+        return true;
+    }
+}
 bool Player::win() {
     if (territories.size() == Map::worldMap.getNumTerritory()){
         cout << "player: " << pID << " win" << endl;
@@ -155,7 +162,7 @@ bool Player::win() {
 void Player::issueOrder() {
     cout << "\nISSUE ORDER: \n" << endl;
     cout << "Enter Order of Territories to Attack\n";
-    printTerritories();
+
     printAdjacentTerritories();
     cout << "\n";
     string attackInput;

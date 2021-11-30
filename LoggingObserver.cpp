@@ -1,6 +1,6 @@
 #include "LoggingObserver.h"
 #include <fstream>
-
+//runable version master
 Subject::Subject() {
 	new LogObserver(this);
 }

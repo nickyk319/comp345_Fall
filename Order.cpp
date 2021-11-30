@@ -2,7 +2,7 @@
 #include "Order.h"
 #include "Player.h"
 #include "ctime"
-
+//runable version master
 Order::Order() {}
 
 Order::Order(const Order& o1) {
@@ -61,7 +61,7 @@ Advance::Advance(const Advance& o1) {
 bool Advance::validate() {
     Territory* terr = this->player->getTerritoryByID(this->territoryid);
     Territory* new_terr = this->player->getTerritoryByID(this->new_territoryid);
-    if (!player->ownTerritory(terr) || player->ownTerritoryByFriend(new_terr) || terr->isAdjTerritory(new_terr) == false || terr->numArmy < this->numSoldiers) {
+    if (!player->ownTerritory(terr) || player->ownTerritoryByFriend(new_terr) || terr->numArmy < this->numSoldiers) {
         return false;
     }
     return true;

@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iomanip>
 #include <random>
-
+//runable version master
 using namespace std;
 Map Map::worldMap;
 
@@ -25,6 +25,7 @@ void GameEngine::startUpPhase(){
     addPlayer();
     //initialize game
     gameStart();
+    mainGameLoop();
 }
 
 
@@ -32,8 +33,10 @@ void GameEngine::startUpPhase(){
 void GameEngine::loadMap() {
     //promp user to enter the name of the map file
     cout << "Please enter the name of the map file you want to load(end with .map format):" << endl;
+    cout << "test load europe.map, enter any key to contiune" << endl;
     cin >> inputMapFile;
     //load map to game engine
+    inputMapFile = "europe.map";
     maploaded->setMapFile(inputMapFile);
     maploaded->readMap();
     cout << "************************************************************************************" << endl;
@@ -131,9 +134,12 @@ void GameEngine::assignCountries() {
 //
 void GameEngine::mainGameLoop() {
     //Find order setup from gamestart()
-    reinforcementPhase();
-    issueOrdersPhase();
-    executeOrdersPhase();
+    cout << "reinforcementPhase" << endl;
+    GameEngine::reinforcementPhase();
+    cout << "issueOrdersPhase" << endl;
+    GameEngine::issueOrdersPhase();
+    cout << "executeOrdersPhase" << endl;
+    GameEngine::executeOrdersPhase();
 }
 
 void GameEngine::reinforcementPhase() {
@@ -143,11 +149,11 @@ void GameEngine::reinforcementPhase() {
         i->reinforcements = floor(i->territories.size() / 3);				//Initial reinforcement pool = floor(#territories / 3)
 
         //Does player own a continent?
-        vector <int> numTerritoriesPerContinent = { 0 };					//Vector to hold count of # of territories per continent
+        vector <int> numTerritoriesPerContinent = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};					//Vector to hold count of # of territories per continent
         for(auto j : i->territories)
             numTerritoriesPerContinent[j->getCID()]+=1;						//Increment count at position CID
 
-        int index = 1;
+        int index = 0;
         for(auto j : Map::worldMap.continents) {									//Compare map continent size with player count
             if (j->territoriesInContinent.size() == numTerritoriesPerContinent[index++]) {
                 i->reinforcements += Map::worldMap.continents[index-1]->getBonus();		//If player owns all territories in continent, add bonus to reinforcements
@@ -162,15 +168,34 @@ void GameEngine::reinforcementPhase() {
 
 //Please uncomment this method when you finished
 void GameEngine::issueOrdersPhase() {
-    for(auto i : player_list) {
-        i->issueOrder();
+    for (auto i : player_list) {
+        if (i->getReinforcementPool() > 0) {
+            cout << "\nYou can place deploy orders now. " << endl;
+            i->issueOrder();
+
+            cout << "\n\n------------------issueorder complete!-------------------\n\n";
+        }
+        else {
+            cout << "You will enter the next step!!" << endl;
+        }
     }
 }
 
 void GameEngine::executeOrdersPhase() {
-    for(auto i : player_list) {
-
+    cout << "\n\n------------------execute order-------------------\n\n";
+    for (auto i : player_list) {
+        for (auto j : i->OrderList) {
+            cout << j.validate();
+            j.execute();
+        }
+        if (i->lose() == true) {
+            player_list.erase(player_list.begin());
+        }
+        if (i->win() == true) {
+            break;
+        }
     }
+    cout << "\n\n------------------execute order complete-------------------\n\n";
 }
 
 

@@ -5,7 +5,7 @@
 #include "Order.h"
 #include "Map.h"
 #include "Cards.h"
-
+//runable version master
 using namespace std;
 
 class Player {
@@ -67,11 +67,13 @@ public:
 
     bool remove();
 
+    bool lose();
+
     bool win();
 
     void issueOrder();
 
-	void printOrder(list<Order>& L);
+	
 
     Territory* getTerritoryByID(int id);
 

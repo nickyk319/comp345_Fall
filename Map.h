@@ -2,7 +2,7 @@
 #include <vector>
 #include <set>
 #include <string>
-
+//runable version master
 using namespace std;
 
 class Territory {
@@ -11,6 +11,7 @@ public:
     int cID;    //Continent ID
     int pID;    //Player ID
     int numArmy;
+    string territoryPlayer = "default player";
     string tName;   //Territory Name
     string cName;   //Continent Name
     bool isAdjacent;  //Connected Continent Check

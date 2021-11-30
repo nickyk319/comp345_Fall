@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 #include <regex>
-
+//runable version master
 using namespace std;
 
 //Territory Implementation
@@ -37,6 +37,9 @@ int Territory::getNumArmy() { return numArmy; }
 string Territory::getTName() { return tName; }
 string Territory::getCName() { return cName; }
 bool Territory::getAdjContinent() { return isAdjacent; }
+string Territory::getTerritoryPlayer() {
+    return territoryPlayer;
+}
 vector<int> Territory::getAdjTerritoryOnMap() { return adjTerritoryOnMap; }
 vector<int> Territory::getAdjTerritoryInContinent() { return adjTerritoriesInContinent; }
 int Territory::getBelongedContinentID() {

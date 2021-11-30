@@ -5,7 +5,7 @@
 #include <fstream>
 #include "LoggingObserver.h"
 using namespace std;
-
+//runable version master
 enum class GameState {
 	start, map_loaded, map_validated, players_added, assign_reinforcement, issue_orders, execute_orders, win, quit
 };
