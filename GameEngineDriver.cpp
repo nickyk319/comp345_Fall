@@ -13,7 +13,27 @@ void executeCommand(Command* c, CommandProcessor* cp) {
 		else if (c->type == Command::CommandType::tournament) {
 			cp->setState(GameState::tournament_mode);
 			c->saveEffect("tournament_mode.");
-			return;
+			
+		}
+		else if (c->type == Command::CommandType::m) {
+			cp->setState(GameState::tournament_mode);
+			c->saveEffect("<listofmapfiles>");
+			
+		}
+		else if (c->type == Command::CommandType::p) {
+			cp->setState(GameState::tournament_mode);
+			c->saveEffect("<listofplayerstrategies>");
+
+		}
+		else if (c->type == Command::CommandType::g) {
+			cp->setState(GameState::tournament_mode);
+			c->saveEffect("<numberofgames>");
+
+		}
+		else if (c->type == Command::CommandType::d) {
+			cp->setState(GameState::tournament_mode);
+			c->saveEffect("<maxnumberofturns>");
+
 		}
 		else if (c->type == Command::CommandType::validatemap) {
 			cp->setState(GameState::map_validated);

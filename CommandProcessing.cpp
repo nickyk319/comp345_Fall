@@ -26,7 +26,19 @@ Command::Command(string commandDesc): command(commandDesc), effect("") {
 	}
 	else if (commandDesc.find("quit") != string::npos) {
 		type = CommandType::quit;
+	}else if (commandDesc.find("m") != string::npos) {
+		type = CommandType::m;
 	}
+	else if (commandDesc.find("p") != string::npos) {
+		type = CommandType::p;
+	}
+	else if (commandDesc.find("d") != string::npos) {
+		type = CommandType::d;
+	}
+	else if (commandDesc.find("g") != string::npos) {
+		type = CommandType::g;
+	}
+
 }
 
 Command::~Command() {
@@ -41,6 +53,8 @@ void Command::saveEffect(string e) {
 string Command::stringToLog() {
 	return "Command's Effect: " + effect;
 }
+
+
 
 // ******************* Command Processor **************
 CommandProcessor::CommandProcessor() {
@@ -80,6 +94,26 @@ bool CommandProcessor::validate(Command* c) {
 	}
 	else if (c->type == Command::CommandType::tournament) {
 		if (state == GameState::start) {
+			return true;
+		}
+	}
+	else if (c->type == Command::CommandType::m) {
+		if (state == GameState::tournament_mode) {
+			return true;
+		}
+	}
+	else if (c->type == Command::CommandType::p) {
+		if (state == GameState::tournament_mode) {
+			return true;
+		}
+	}
+	else if (c->type == Command::CommandType::g) {
+		if (state == GameState::tournament_mode) {
+			return true;
+		}
+	}
+	else if (c->type == Command::CommandType::d) {
+		if (state == GameState::tournament_mode) {
 			return true;
 		}
 	}

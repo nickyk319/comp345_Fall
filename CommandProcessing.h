@@ -13,7 +13,7 @@ enum class GameState {
 // single command
 class Command : public ILoggable, Subject{
 public:
-	enum class CommandType {tournament, loadmap, validatemap, addplayer, gamestart, replay, quit, none};
+	enum class CommandType {tournament, m, p, g, d, loadmap, validatemap, addplayer, gamestart, replay, quit, none};
 
 	// constructor
 	Command(string commandDesc);
