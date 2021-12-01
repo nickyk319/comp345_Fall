@@ -7,13 +7,13 @@
 using namespace std;
 //runable version master
 enum class GameState {
-	start, map_loaded, map_validated, players_added, assign_reinforcement, issue_orders, execute_orders, win, quit
+	start, map_loaded, map_validated, players_added, assign_reinforcement, issue_orders, execute_orders, win, tournament_mode, quit
 };
 
 // single command
 class Command : public ILoggable, Subject{
 public:
-	enum class CommandType {loadmap, validatemap, addplayer, gamestart, replay, quit, none};
+	enum class CommandType {tournament, loadmap, validatemap, addplayer, gamestart, replay, quit, none};
 
 	// constructor
 	Command(string commandDesc);

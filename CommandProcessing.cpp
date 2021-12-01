@@ -12,6 +12,9 @@ Command::Command(string commandDesc): command(commandDesc), effect("") {
 	else if (commandDesc.find("validatemap") != string::npos) {
 		type = CommandType::validatemap;
 	}
+	else if (commandDesc.find("tournament") != string::npos) {
+		type = CommandType::tournament;
+	}
 	else if (commandDesc.find("addplayer") != string::npos) {
 		type = CommandType::addplayer;
 	}
@@ -72,6 +75,11 @@ bool CommandProcessor::validate(Command* c) {
 	}
 	else if (c->type == Command::CommandType::validatemap) {
 		if (state == GameState::map_loaded) {
+			return true;
+		}
+	}
+	else if (c->type == Command::CommandType::tournament) {
+		if (state == GameState::start) {
 			return true;
 		}
 	}

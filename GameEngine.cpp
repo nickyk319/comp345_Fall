@@ -1,4 +1,5 @@
 #include "GameEngine.h"
+#include "CommandProcessing.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>
@@ -18,14 +19,22 @@ GameEngine::GameEngine() {
 
 void GameEngine::startUpPhase(){
     //load map
-    loadMap();
-    //validate map
-    validateMap();
-    //add players
-    addPlayer();
-    //initialize game
-    gameStart();
-    mainGameLoop();
+    cout << "enter O for A2 version GameEngine. or enter any key to access commandProcessing.cpp for A3" << endl;
+    string z;
+    cin >>z;
+    if (z._Equal("O") || z._Equal("0") || z._Equal("o")) {
+        cout << "-----------------old gameEngine-----------------" << endl;
+        loadMap();
+        //validate map
+        validateMap();
+        //add players
+        addPlayer();
+        //initialize game
+        gameStart();
+        mainGameLoop();
+    }
+  
+    
 }
 
 
