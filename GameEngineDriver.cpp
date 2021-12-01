@@ -18,7 +18,8 @@ void executeCommand(Command* c, CommandProcessor* cp) {
 		else if (c->type == Command::CommandType::m) {
 			cp->setState(GameState::tournament_mode);
 			c->saveEffect("<listofmapfiles>");
-			
+			GameEngine* tor = new GameEngine();
+			tor->GameEngine::tournamentmode_m();
 		}
 		else if (c->type == Command::CommandType::p) {
 			cp->setState(GameState::tournament_mode);

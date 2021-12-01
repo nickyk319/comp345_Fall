@@ -23,6 +23,12 @@ private:
     string playerName;
     string inputMapFile;
     vector<Player *> player_list;
+	/*class trournamet {
+		<listofmapfiles>
+			<listofplayerstrategies>
+			<numberofgames>
+			<maxnumberofturns>
+	};*/
 
 
 
@@ -120,6 +126,14 @@ public:
 	// tell the player if a winner has be decided.
 
 	void replay();
+
+	void tournamentmode_m();
+
+	void tournamentmode_p();
+
+	void tournamentmode_g();
+
+	void tournamentmode_d();
 
 	void end() {
 		exit(0);

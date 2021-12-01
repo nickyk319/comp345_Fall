@@ -243,3 +243,72 @@ void GameEngine::replay() {
 	cout << "A brand new game has started!" << endl;
 	state = GameState::start;
 }
+void GameEngine::tournamentmode_m() {
+    int mapnum;
+    do {
+        cout << "Map selection: please enter 1 to 5(number of maps to play)" << endl;
+
+        cin >> mapnum;
+        if (mapnum > 5 || mapnum < 1) {
+            cout << "Invalid input, please enter again!" << endl;
+        }
+    } while (mapnum>5|| mapnum<1);
+        cout << "M: ";
+        for (int i = 1; i<=mapnum; i++) 
+        {
+            cout << "Map" << i <<", ";
+        }
+        GameEngine::tournamentmode_p();
+}
+void GameEngine::tournamentmode_p() {
+    do {
+        // 1. ask for user input for number of players
+        cout << "\nEnter the number of computer stratgies you want to have (2-4): ";
+        cin >> numOfPlayers; // add input validation
+        if (numOfPlayers > 4 || numOfPlayers < 2) {
+            cout << "Invalid input, please enter again!" << endl;
+        }
+    } while (numOfPlayers > 4 || numOfPlayers < 2);
+    
+    for (int i = 0; i < numOfPlayers; i++) {
+        //strategies name todo:0 humanplayer,1 aggressive player,2 benevolent player,3 neutral player,4 cheater player
+        playerName = "strategies";
+        player_list.push_back(new Player(i, playerName));
+    }
+    // 2. players added successfully, print message.
+    cout << "************************************************************************************" << endl;
+    cout << "Player strategies initialize complete. Now go to next step -- number of games(g)" << endl;
+    GameEngine::tournamentmode_g();
+}
+void GameEngine::tournamentmode_g() {
+    int gamenum;
+    do {
+        // 1. ask for user input
+        cout << "Enter the number of games you want to play (1-5): ";
+        cin >> gamenum; // add input validation
+        if (gamenum > 5 || gamenum < 1) {
+            cout << "Invalid input, please enter again!" << endl;
+        }
+    } while (gamenum >5  || gamenum < 1);
+
+    cout << "G: " << gamenum << endl;
+     
+       
+   
+    GameEngine::tournamentmode_d();
+}
+void GameEngine::tournamentmode_d() {
+    int turn;
+    do {
+        // 1. ask for user input
+        cout << "Enter the number of maximum truns for each game (10-50): ";
+        cin >> turn; // add input validation
+        if (turn > 50 || turn < 10) {
+            cout << "Invalid input, please enter again!" << endl;
+        }
+    } while (turn > 50 || turn < 10);
+
+    cout << "D: " << turn << endl;
+    cout << "initialize complete:"<< endl;
+    system("pause");
+}
