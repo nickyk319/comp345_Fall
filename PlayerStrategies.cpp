@@ -1,7 +1,20 @@
 #include "PlayerStrategies.h"
 #include <cstdlib>
+
 PlayerStrategy::PlayerStrategy() : player(nullptr) {}
 PlayerStrategy::~PlayerStrategy() {}
+PlayerStrategy::PlayerStrategy(const PlayerStrategy& copy) {
+    this->player = copy.player;
+}
+PlayerStrategy& PlayerStrategy::operator=(const PlayerStrategy& op) {
+    player = op.player;
+    return *this;
+}
+std::ostream& operator<<(std::ostream& out, const PlayerStrategy& output) {
+    out << "This is player strategy";
+    return out;
+}
+
 void PlayerStrategy::setPlayer(Player* player) {
     this->player = player;
 }
@@ -10,7 +23,22 @@ static int getRandom(int a, int b) {
     return (rand() % (b - a + 1)) + a;
 }
 
+HumanPlayerStrategy::HumanPlayerStrategy() : PlayerStrategy() {}
 
+HumanPlayerStrategy::~HumanPlayerStrategy() {}
+
+HumanPlayerStrategy::HumanPlayerStrategy(const HumanPlayerStrategy& copy): PlayerStrategy(copy) {}
+
+HumanPlayerStrategy& HumanPlayerStrategy::operator=(const HumanPlayerStrategy& op) {
+    player = op.player;
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out,
+                         const HumanPlayerStrategy& output) {
+    out << "This is human player strategy";
+    return out;
+}
 
 // the human player give command to do action - g
 void  HumanPlayerStrategy::issueOrder() {
@@ -112,7 +140,22 @@ vector<Territory> HumanPlayerStrategy::todenfend(const string& s {
          return todefendlist;
      };
 
+AggressivePlayerStrategy::AggressivePlayerStrategy() : PlayerStrategy() {}
 
+AggressivePlayerStrategy::~AggressivePlayerStrategy() {}
+
+AggressivePlayerStrategy::AggressivePlayerStrategy(const AggressivePlayerStrategy& copy)
+        : PlayerStrategy(copy) {}
+
+AggressivePlayerStrategy& AggressivePlayerStrategy::operator=(const AggressivePlayerStrategy& op) {
+    player = op.player;
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out, const AggressivePlayerStrategy& output) {
+    out << "This is aggressive player strategy";
+    return out;
+}
 
 // computer player which focus on attack
 void AggressivePlayerStrategy::issueOrder() {
@@ -236,6 +279,23 @@ vector<Territory> AggressivePlayerStrategy::todenfend(const string& s{
          
     };
 
+BenevolentPlayerStrategy::BenevolentPlayerStrategy() : PlayerStrategy() {}
+
+BenevolentPlayerStrategy::~BenevolentPlayerStrategy() {}
+
+BenevolentPlayerStrategy::BenevolentPlayerStrategy(const BenevolentPlayerStrategy& copy): PlayerStrategy(toCopy) {}
+
+BenevolentPlayerStrategy& BenevolentPlayerStrategy::operator=(
+        const BenevolentPlayerStrategy& op) {
+    player = op.player;
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& out,
+                         const BenevolentPlayerStrategy& output) {
+    out << "This is benevolent player strategy";
+    return out;
+}
 
 // computer player which focus on defend
 void BenevolentPlayerStrategy::issueOrder() {
