@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Order.h"
+
 using namespace std;
 //runable version master
 Player::Player()
@@ -93,6 +94,10 @@ int Player:: getReinforcementPool(){
 
 void Player:: setReinforcementPool(int army){
     this->reinforcements = army;
+}
+
+void Player::setPlayerStrategy(PlayerStrategy* strategy) {
+    this->playerStrategy = strategy;
 }
 
 void Player::printList(const list<int>& L) {
