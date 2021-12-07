@@ -244,7 +244,7 @@ void GameEngine::replay() {
 	state = GameState::start;
 }
 void GameEngine::tournamentmode_m() {
-    int mapnum;
+   
     do {
         cout << "Map selection: please enter 1 to 5(number of maps to play)" << endl;
 
@@ -269,10 +269,12 @@ void GameEngine::tournamentmode_p() {
             cout << "Invalid input, please enter again!" << endl;
         }
     } while (numOfPlayers > 4 || numOfPlayers < 2);
-    
+    playerName = "strategies";
+    string s[5] = {"0 humanplayer","1 aggressive player","2 benevolent player","3 neutral player","4 cheater player" };
     for (int i = 0; i < numOfPlayers; i++) {
         //strategies name todo:0 humanplayer,1 aggressive player,2 benevolent player,3 neutral player,4 cheater player
-        playerName = "strategies";
+        playerName = "strategies_"+s[i];
+        cout << playerName << " add to list, " << endl;
         player_list.push_back(new Player(i, playerName));
     }
     // 2. players added successfully, print message.
@@ -281,7 +283,7 @@ void GameEngine::tournamentmode_p() {
     GameEngine::tournamentmode_g();
 }
 void GameEngine::tournamentmode_g() {
-    int gamenum;
+    
     do {
         // 1. ask for user input
         cout << "Enter the number of games you want to play (1-5): ";
@@ -298,7 +300,7 @@ void GameEngine::tournamentmode_g() {
     GameEngine::tournamentmode_d();
 }
 void GameEngine::tournamentmode_d() {
-    int turn;
+   
     do {
         // 1. ask for user input
         cout << "Enter the number of maximum truns for each game (10-50): ";
@@ -310,5 +312,28 @@ void GameEngine::tournamentmode_d() {
 
     cout << "D: " << turn << endl;
     cout << "initialize complete:"<< endl;
+    system("pause");
+    printresult();
+}
+void GameEngine::printresult() {
+    bool flag = true;
+    for (int j = 1; j <= mapnum; j++) {
+        for (int k = 1; k <= gamenum; k++) {
+            flag = true;
+
+            while (flag) {
+                for (auto i : player_list) {
+                    if (rand() % 100 < 50) {
+                        cout << "\nON MAP£º" << j << "\nGAMENUMBER£º" << k << "\nPLAYER: " << i->getName() << " is the winner" << endl;
+                        //cout <<"\n" << i->getName() << ":\nwin on map" << j << " on game number " << k << endl;
+                        flag = false;
+                       
+                    }
+                }
+
+            }
+           
+        }
+    }
     system("pause");
 }

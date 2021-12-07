@@ -39,7 +39,9 @@ public:
     void shufflePlayerList();
     void startUpPhase();
     void gameStart();
-
+	int mapnum;
+	int gamenum;
+	int turn;
 	string stateToString() {
 		switch (state) {
 		case GameState::start:
@@ -134,6 +136,8 @@ public:
 	void tournamentmode_g();
 
 	void tournamentmode_d();
+
+	void printresult();
 
 	void end() {
 		exit(0);
